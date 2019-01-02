@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'dart:math';
 import 'util.dart';
-import '../particles.dart';
+import 'particles.dart';
 
 class Particle {
 
