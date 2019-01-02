@@ -209,7 +209,7 @@ class Particles {
 
   }
 
-  /* ---------- pJS functions - canvas ------------ */
+  /* ---------- Particles functions - canvas ------------ */
 
   void _createCanvas() {
     /* no id? set the id to default id */
@@ -217,12 +217,12 @@ class Particles {
       id = 'particles';
     }
 
-    /* pJS elements */
+    /* Particles elements */
     Element tag = document.getElementById(id);
     String canvasClass = 'particles-js-canvas-el';
     List<Node> existCanvas = tag.getElementsByClassName(canvasClass);
 
-    /* remove canvas if exists into the pJS target tag */
+    /* remove canvas if exists into the Particles target tag */
     if (existCanvas.length > 0) {
       while (existCanvas.length > 0) {
         existCanvas[0].remove();
@@ -285,7 +285,7 @@ class Particles {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   }
 
-  /* --------- pJS functions - particles ----------- */
+  /* --------- Particles functions - particles ----------- */
 
   void _particlesCreate() {
     for (int i = 0; i < settings['particles']['number']['value']; i++) {
@@ -544,7 +544,7 @@ class Particles {
     }
   }
 
-  /* ---------- pJS functions - modes events ------------ */
+  /* ---------- Particles functions - modes events ------------ */
 
   void _removeParticles(nb) {
     settings['particles']['array'].removeRange(0, nb);
@@ -960,7 +960,7 @@ class Particles {
               settings['tmp']['source_svg'] = req.response;
               _checkBeforeDraw();
             } else {
-              print('Error pJS - Image not found');
+              print('Error Particles - Image not found');
               settings['tmp']['img_error'] = true;
             }
           }
@@ -975,7 +975,7 @@ class Particles {
         img.src = settings['particles']['shape']['image']['src'];
       }
     } else {
-      print('Error pJS - No image.src');
+      print('Error Particles - No image.src');
       settings['tmp']['img_error'] = true;
     }
   }
