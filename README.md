@@ -158,7 +158,7 @@ key | type | default | notes
 `particles > shape > image > src` |`String` | `"particle.png"` | Needs cors access
 `particles > shape > image > width` | `num` | `100`
 `particles > shape > image > height` | `num` | `100`
-`particles > opacity > value` | `num` | `0.75` | 0 to 1
+`particles > opacity > value` | `num` | `1` | 0 to 1
 `particles > opacity > random` | `bool` | `false` 
 `particles > opacity > anim > enable` | `bool` | `false` 
 `particles > opacity > anim > speed` | `num` | `2`
