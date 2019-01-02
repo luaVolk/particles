@@ -1,4 +1,3 @@
-
 import 'dart:html';
 import 'dart:math';
 import 'dart:async';
@@ -6,16 +5,18 @@ import 'util.dart';
 import 'particle.dart';
 
 class Particles {
-
   /// The id of the element that will contain the particles' [canvas]
   String id;
 
   /// The canvas where the particles will be drawn
   CanvasElement canvas;
+
   /// The context of the [canvas] where the particles will be drawn
   CanvasRenderingContext2D ctx;
+
   /// The width of the [canvas] where the particles will be drawn
   int canvasWidth;
+
   /// The height of the [canvas] where the particles will be drawn
   int canvasHeight;
 
@@ -155,14 +156,13 @@ class Particles {
    Map<String, dynamic> config;
 
   /// The class constructor. It won't start drawing particles until [start()] is executed. 
-  Particles({String this.id: 'particles' , Map<String, dynamic> this.config});
+  Particles({String this.id: 'particles', Map<String, dynamic> this.config});
 
   /// Starts drawing particles
   Particles start() {
-
     _createCanvas();
 
-    if(config != null){
+    if (config != null) {
       settings = deepExtend(settings, config);
     }
 
@@ -186,12 +186,10 @@ class Particles {
   }
 
   void _retinaInit() {
-
-    if(settings['retina_detect'] && window.devicePixelRatio > 1){
+    if (settings['retina_detect'] && window.devicePixelRatio > 1) {
       _pxratio = window.devicePixelRatio;
       settings['tmp']['retina'] = true;
-    }
-    else{
+    } else {
       _pxratio = 1;
       settings['tmp']['retina'] = false;
     }
@@ -214,9 +212,8 @@ class Particles {
   /* ---------- pJS functions - canvas ------------ */
 
   void _createCanvas() {
-
     /* no id? set the id to default id */
-    if(id == null){
+    if (id == null) {
       id = 'particles';
     }
 
@@ -226,8 +223,8 @@ class Particles {
     List<Node> existCanvas = tag.getElementsByClassName(canvasClass);
 
     /* remove canvas if exists into the pJS target tag */
-    if(existCanvas.length > 0){
-      while(existCanvas.length > 0){
+    if (existCanvas.length > 0) {
+      while (existCanvas.length > 0) {
         existCanvas[0].remove();
       }
     }
@@ -248,20 +245,17 @@ class Particles {
     ctx = canvas.context2D;
   }
 
-  void _canvasSize(){
-
+  void _canvasSize() {
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
 
-    if(settings != null && settings['interactivity']['events']['resize']) {
-
+    if (settings != null && settings['interactivity']['events']['resize']) {
       window.addEventListener('resize', (_) {
-
           canvasWidth = canvas.offsetWidth;
           canvasHeight = canvas.offsetHeight;
 
           /* resize canvas */
-          if(settings['tmp'].containsKey('retina') && settings['tmp']['retina']){
+        if (settings['tmp'].containsKey('retina') && settings['tmp']['retina']) {
             canvasWidth *= _pxratio;
             canvasHeight *= _pxratio;
           }
@@ -270,7 +264,7 @@ class Particles {
           canvas.height = canvasHeight;
 
           /* repaint canvas on anim disabled */
-          if(!settings['particles']['move']['enable']){
+        if (!settings['particles']['move']['enable']) {
             _particlesEmpty();
             _particlesCreate();
             _particlesDraw();
@@ -279,33 +273,32 @@ class Particles {
 
         /* density particles enabled */
         _densityAutoParticles();
-
       });
     }
   }
 
-  void _canvasPaint(){
+  void _canvasPaint() {
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
   }
 
-  void _canvasClear(){
+  void _canvasClear() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   }
 
   /* --------- pJS functions - particles ----------- */
 
-  
-
-  void _particlesCreate(){
-    for(int i = 0; i < settings['particles']['number']['value']; i++) {
-      settings['particles']['array'].add(new Particle(settings['particles']['color'], settings['particles']['opacity']['value'], this));
+  void _particlesCreate() {
+    for (int i = 0; i < settings['particles']['number']['value']; i++) {
+      settings['particles']['array'].add(new Particle(
+        settings['particles']['color'],
+        settings['particles']['opacity']['value'],
+        this
+      ));
     }
   }
 
-  void _particlesUpdate(){
-
-    for(int i = 0; i <settings['particles']['array'].length; i++){
-
+  void _particlesUpdate() {
+    for (int i = 0; i < settings['particles']['array'].length; i++) {
       /* the particle */
       Particle p = settings['particles']['array'][i];
 
@@ -318,46 +311,56 @@ class Particles {
       // }
 
       /* move the particle */
-      if(settings['particles']['move']['enable']){
-        double ms = settings['particles']['move']['speed']/2;
+      if (settings['particles']['move']['enable']) {
+        double ms = settings['particles']['move']['speed'] / 2;
         p.x += p.vx * ms;
         p.y += p.vy * ms;
       }
 
       /* change opacity status */
-      if(settings['particles']['opacity']['anim']['enable']) {
-        if(p.opacityStatus == true) {
-          if(p.opacity >= settings['particles']['opacity']['value']) p.opacityStatus = false;
+      if (settings['particles']['opacity']['anim']['enable']) {
+        if (p.opacityStatus == true) {
+          if (p.opacity >= settings['particles']['opacity']['value']) {
+            p.opacityStatus = false;
+          }
           p.opacity += p.vo;
-        }else {
-          if(p.opacity <= settings['particles']['opacity']['anim']['opacity_min']) p.opacityStatus = true;
+        } else {
+          if (p.opacity <= settings['particles']['opacity']['anim']['opacity_min']) {
+            p.opacityStatus = true;
+          }
           p.opacity -= p.vo;
         }
-        if(p.opacity < 0) p.opacity = 0;
+
+        if (p.opacity < 0) p.opacity = 0;
       }
 
       /* change size */
-      if(settings['particles']['size']['anim']['enable']){
-        if(p.sizeStatus == true){
-          if(p.radius >= settings['particles']['size']['value']) p.sizeStatus = false;
+      if (settings['particles']['size']['anim']['enable']) {
+        if (p.sizeStatus == true) {
+          if (p.radius >= settings['particles']['size']['value']) {
+            p.sizeStatus = false;
+          }
           p.radius += p.vs;
-        }else{
-          if(p.radius <= settings['particles']['size']['anim']['size_min']) p.sizeStatus = true;
+        } else {
+          if (p.radius <= settings['particles']['size']['anim']['size_min']) {
+            p.sizeStatus = true;
+          }
           p.radius -= p.vs;
         }
-        if(p.radius < 0) p.radius = 0;
+
+        if (p.radius < 0) p.radius = 0;
       }
 
       /* change particle position if it is out of canvas */
       Map<String, num> new_pos;
-      if(settings['particles']['move']['out_mode'] == 'bounce'){
+      if (settings['particles']['move']['out_mode'] == 'bounce') {
         new_pos = {
           'x_left': p.radius,
-          'x_right':  canvasWidth,
+          'x_right': canvasWidth,
           'y_top': p.radius,
           'y_bottom': canvasHeight
         };
-      }else{
+      } else {
         new_pos = {
           'x_left': -p.radius,
           'x_right': canvasWidth + p.radius,
@@ -366,72 +369,78 @@ class Particles {
         };
       }
 
-      if(p.x - p.radius > canvasWidth){
+      if (p.x - p.radius > canvasWidth) {
         p.x = new_pos['x_left'];
         p.y = _rng.nextDouble() * canvasHeight;
-      }
-      else if(p.x + p.radius < 0){
+      } else if (p.x + p.radius < 0) {
         p.x = new_pos['x_right'];
         p.y = _rng.nextDouble() * canvasHeight;
       }
-      if(p.y - p.radius > canvasHeight){
+      if (p.y - p.radius > canvasHeight) {
         p.y = new_pos['y_top'];
         p.x = _rng.nextDouble() * canvasWidth;
-      }
-      else if(p.y + p.radius < 0){
+      } else if (p.y + p.radius < 0) {
         p.y = new_pos['y_bottom'];
         p.x = _rng.nextDouble() * canvasWidth;
       }
 
       /* out of canvas modes */
-      switch(settings['particles']['move']['out_mode']){
+      switch (settings['particles']['move']['out_mode']) {
         case 'bounce':
-          if (p.x + p.radius > canvasWidth) p.vx = -p.vx;
-          else if (p.x - p.radius < 0) p.vx = -p.vx;
-          if (p.y + p.radius > canvasHeight) p.vy = -p.vy;
-          else if (p.y - p.radius < 0) p.vy = -p.vy;
+          if (p.x + p.radius > canvasWidth) {
+            p.vx = -p.vx;
+          } else if (p.x - p.radius < 0) {
+            p.vx = -p.vx;
+          }
+          if (p.y + p.radius > canvasHeight) {
+            p.vy = -p.vy;
+          } else if (p.y - p.radius < 0) {
+           p.vy = -p.vy;
+          }
         break;
       }
 
       /* events */
-      if(settings['interactivity']['events']['onhover']['mode'].contains('grab')){
+      if (settings['interactivity']['events']['onhover']['mode'].contains('grab')) {
         _grabParticle(p);
       }
 
-      if(settings['interactivity']['events']['onhover']['mode'].contains('bubble') || settings['interactivity']['events']['onclick']['mode'].contains('bubble')){
+      if (settings['interactivity']['events']['onhover']['mode'].contains('bubble') ||
+          settings['interactivity']['events']['onclick']['mode'].contains('bubble')) {
         _bubbleParticle(p);
       }
 
-      if(settings['interactivity']['events']['onhover']['mode'].contains('repulse') || settings['interactivity']['events']['onclick']['mode'].contains('repulse')){
+      if (settings['interactivity']['events']['onhover']['mode'].contains('repulse') ||
+          settings['interactivity']['events']['onclick']['mode'].contains('repulse')) {
         _repulseParticle(p);
       }
 
       /* interaction auto between particles */
-      if(settings['particles']['line_linked']['enable'] || settings['particles']['move']['attract']['enable']){
-        for(int j = i + 1; j < settings['particles']['array'].length; j++){
+      if (settings['particles']['line_linked']['enable'] ||
+          settings['particles']['move']['attract']['enable']) {
+        for (int j = i + 1; j < settings['particles']['array'].length; j++) {
           Particle p2 = settings['particles']['array'][j];
 
           /* link particles */
-          if(settings['particles']['line_linked']['enable']){
-            _linkParticles(p,p2);
+          if (settings['particles']['line_linked']['enable']) {
+            _linkParticles(p, p2);
           }
 
           /* attract particles */
-          if(settings['particles']['move']['attract']['enable']){
-            _attractParticles(p,p2);
+          if (settings['particles']['move']['attract']['enable']) {
+            _attractParticles(p, p2);
           }
 
           /* bounce particles */
-          if(settings['particles']['move']['bounce']){
-            _bounceParticles(p,p2);
+          if (settings['particles']['move']['bounce']) {
+            _bounceParticles(p, p2);
           }
         }
       }
     }
   }
 
-  void _particlesDraw(){
-
+  void _particlesDraw() {
     /* clear canvas */
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
@@ -439,19 +448,18 @@ class Particles {
     _particlesUpdate();
 
     /* draw each particle */
-    for(int i = 0; i < settings['particles']['array'].length; i++){
+    for (int i = 0; i < settings['particles']['array'].length; i++) {
       Particle p = settings['particles']['array'][i];
       p.draw();
     }
   }
 
-  void _particlesEmpty(){
+  void _particlesEmpty() {
     settings['particles']['array'] = [];
   }
 
   /// Refreshes the particles' canvas. Can be used if you changed the configuration
-  void particlesRefresh(){
-
+  void particlesRefresh() {
     /* init all */
     cancelRequestAnimFrame(settings['tmp']['checkAnimFrame']);
     cancelRequestAnimFrame(_drawAnimFrame);
@@ -465,19 +473,17 @@ class Particles {
    _start();
   }
 
-  void _linkParticles(Particle p1, Particle p2){
-
-    num dx = p1.x - p2.x,
-        dy = p1.y - p2.y;
-    double dist = sqrt(dx*dx + dy*dy);
+  void _linkParticles(Particle p1, Particle p2) {
+    num dx = p1.x - p2.x, dy = p1.y - p2.y;
+    double dist = sqrt(dx * dx + dy * dy);
 
     /* draw a line between p1 and p2 if the distance between them is under the config distance */
-    if(dist <= settings['particles']['line_linked']['distance']){
+    if (dist <= settings['particles']['line_linked']['distance']) {
+      double opacity_line = settings['particles']['line_linked']['opacity'] -
+          (dist / (1 / settings['particles']['line_linked']['opacity'])) /
+              settings['particles']['line_linked']['distance'];
 
-      double opacity_line = settings['particles']['line_linked']['opacity'] - (dist / (1/settings['particles']['line_linked']['opacity'])) / settings['particles']['line_linked']['distance'];
-
-      if(opacity_line > 0){
-
+      if (opacity_line > 0) {
         /* style */
         Map<String, int> color_line = settings['particles']['line_linked']['color_rgb_line'];
         ctx.strokeStyle = 'rgba(${color_line['r']},${color_line['g']},${color_line['b']},$opacity_line)';
@@ -494,64 +500,52 @@ class Particles {
     }
   }
 
-  void _attractParticles(Particle p1, Particle p2){
-
+  void _attractParticles(Particle p1, Particle p2) {
     /* condensed particles */
-    num dx = p1.x - p2.x,
-        dy = p1.y - p2.y;
+    num dx = p1.x - p2.x, dy = p1.y - p2.y;
 
-    double dist = sqrt(dx*dx + dy*dy);
+    double dist = sqrt(dx * dx + dy * dy);
 
-    if(dist <= settings['particles']['line_linked']['distance']){
-
-      double ax = dx/(settings['particles']['move']['attract']['rotateX']*1000),
-             ay = dy/(settings['particles']['move']['attract']['rotateY']*1000);
+    if (dist <= settings['particles']['line_linked']['distance']) {
+      double ax = dx / (settings['particles']['move']['attract']['rotateX'] * 1000),
+          ay = dy / (settings['particles']['move']['attract']['rotateY'] * 1000);
 
       p1.vx -= ax;
       p1.vy -= ay;
 
       p2.vx += ax;
       p2.vy += ay;
-
     }
   }
 
-  void _bounceParticles(Particle p1, Particle p2){
+  void _bounceParticles(Particle p1, Particle p2) {
+    num dx = p1.x - p2.x, dy = p1.y - p2.y, dist_p = p1.radius + p2.radius;
 
-    num dx = p1.x - p2.x,
-        dy = p1.y - p2.y,
-        dist_p = p1.radius+p2.radius;
+    double dist = sqrt(dx * dx + dy * dy);
     
-    double dist = sqrt(dx*dx + dy*dy);
-
-    if(dist <= dist_p){
+    if (dist <= dist_p) {
       p1.vx = -p1.vx;
       p1.vy = -p1.vy;
 
       p2.vx = -p2.vx;
       p2.vy = -p2.vy;
     }
-
   }
 
-  void _pushParticles(nb, [pos]){
-
+  void _pushParticles(nb, [pos]) {
     settings['particles']['tmp']['pushing'] = true;
 
-    for(int i = 0; i < nb; i++){
-      settings['particles']['array'].add(
-        new Particle(
-          settings['particles']['color'],
-          settings['particles']['opacity']['value'],
-          this,
-          {
-            'x': pos != null ? pos['pos_x'] : _rng.nextDouble() * canvasWidth,
-            'y': pos != null ? pos['pos_y'] : _rng.nextDouble() * canvasHeight
-          }
-        )
-      );
-      if(i == nb-1){
-        if(!settings['particles']['move']['enable']){
+    for (int i = 0; i < nb; i++) {
+      settings['particles']['array'].add(new Particle(
+        settings['particles']['color'],
+        settings['particles']['opacity']['value'],
+        this, {
+          'x': pos != null ? pos['pos_x'] : _rng.nextDouble() * canvasWidth,
+          'y': pos != null ? pos['pos_y'] : _rng.nextDouble() * canvasHeight
+        }
+      ));
+      if (i == nb - 1) {
+        if (!settings['particles']['move']['enable']) {
           _particlesDraw();
         }
         settings['particles']['tmp']['pushing'] = false;
@@ -561,219 +555,245 @@ class Particles {
 
   /* ---------- pJS functions - modes events ------------ */
 
-  void _removeParticles(nb){
+  void _removeParticles(nb) {
     settings['particles']['array'].removeRange(0, nb);
-    if(!settings['particles']['move']['enable']){
+    if (!settings['particles']['move']['enable']) {
       _particlesDraw();
     }
   }
 
-  void _bubbleParticle(Particle p){
-
+  void _bubbleParticle(Particle p) {
     double dist_mouse, time_spent, value;
 
     /* on hover event */
-    if(settings['interactivity']['events']['onhover']['enable'] && settings['interactivity']['events']['onhover']['mode'].contains('bubble') && settings['interactivity']['status'] == 'mousemove'){
-
+    if (settings['interactivity']['events']['onhover']['enable'] &&
+        settings['interactivity']['events']['onhover']['mode'] .contains('bubble') &&
+        settings['interactivity']['status'] == 'mousemove') {
       num dx_mouse = p.x - settings['interactivity']['mouse']['pos_x'],
           dy_mouse = p.y - settings['interactivity']['mouse']['pos_y'];
-      dist_mouse = sqrt(dx_mouse*dx_mouse + dy_mouse*dy_mouse);
+      dist_mouse = sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse);
 
-      double ratio = 1 - dist_mouse / settings['interactivity']['modes']['bubble']['distance'];
+      double ratio = 1 -
+          dist_mouse / settings['interactivity']['modes']['bubble']['distance'];
 
-      init(){
+      init() {
         p.opacity_bubble = p.opacity;
         p.radius_bubble = p.radius;
       }
 
       /* mousemove - check ratio */
-      if(dist_mouse <= settings['interactivity']['modes']['bubble']['distance']){
-
-        if(ratio >= 0 && settings['interactivity']['status'] == 'mousemove'){
-
+      if (dist_mouse <= settings['interactivity']['modes']['bubble']['distance']) {
+        if (ratio >= 0 && settings['interactivity']['status'] == 'mousemove') {
           /* size */
-          if(settings['interactivity']['modes']['bubble']['size'] != settings['particles']['size']['value']){
-
-            if(settings['interactivity']['modes']['bubble']['size'] > settings['particles']['size']['value']){
-              var size = p.radius + (settings['interactivity']['modes']['bubble']['size']*ratio);
-              if(size >= 0){
+          if (settings['interactivity']['modes']['bubble']['size'] != settings['particles']['size']['value']) {
+            if (settings['interactivity']['modes']['bubble']['size'] > settings['particles']['size']['value']) {
+              var size = p.radius + (settings['interactivity']['modes']['bubble']['size'] * ratio);
+              if (size >= 0) {
                 p.radius_bubble = size;
               }
-            }else{
+            } else {
               var dif = p.radius - settings['interactivity']['modes']['bubble']['size'],
-                  size = p.radius - (dif*ratio);
-              if(size > 0){
+                  size = p.radius - (dif * ratio);
+              if (size > 0) {
                 p.radius_bubble = size;
-              }else{
+              } else {
                 p.radius_bubble = 0;
               }
             }
-
           }
 
           /* opacity */
-          if(settings['interactivity']['modes']['bubble']['opacity'] != settings['particles']['opacity']['value']){
-
-            if(settings['interactivity']['modes']['bubble']['opacity'] > settings['particles']['opacity']['value']){
-              double opacity = settings['interactivity']['modes']['bubble']['opacity']*ratio;
-              if(opacity > p.opacity && opacity <= settings['interactivity']['modes']['bubble']['opacity']){
+          if (settings['interactivity']['modes']['bubble']['opacity'] != settings['particles']['opacity']['value']) {
+            if (settings['interactivity']['modes']['bubble']['opacity'] > settings['particles']['opacity']['value']) {
+              double opacity = settings['interactivity']['modes']['bubble'] ['opacity'] * ratio;
+              if (opacity > p.opacity &&
+                  opacity <= settings['interactivity']['modes']['bubble']['opacity']) {
                 p.opacity_bubble = opacity;
               }
-            }else{
-              double opacity = p.opacity - (settings['particles']['opacity']['value']-settings['interactivity']['modes']['bubble']['opacity'])*ratio;
-              if(opacity < p.opacity && opacity >= settings['interactivity']['modes']['bubble']['opacity']){
+            } else {
+              double opacity = p.opacity - (settings['particles']['opacity']['value'] - settings['interactivity']['modes']['bubble']['opacity']) * ratio;
+              if (opacity < p.opacity &&
+                  opacity >= settings['interactivity']['modes']['bubble']['opacity']) {
                 p.opacity_bubble = opacity;
               }
             }
-
           }
-
         }
-
-      }else{
+      } else {
         init();
       }
-
 
       /* mouseleave */
-      if(settings['interactivity']['status'] == 'mouseleave'){
+      if (settings['interactivity']['status'] == 'mouseleave') {
         init();
       }
-
     }
 
     /* on click event */
-    else if(settings['interactivity']['events']['onclick']['enable'] && settings['interactivity']['events']['onclick']['mode'].contains('bubble')){
-
-
-      if(settings['tmp']['bubble_clicking']){
+    else if (settings['interactivity']['events']['onclick']['enable'] &&
+        settings['interactivity']['events']['onclick']['mode'].contains('bubble')) {
+      if (settings['tmp']['bubble_clicking']) {
       var dx_mouse = p.x - settings['interactivity']['mouse']['click_pos_x'],
           dy_mouse = p.y - settings['interactivity']['mouse']['click_pos_y'];
-      dist_mouse = sqrt(dx_mouse*dx_mouse + dy_mouse*dy_mouse);
-      time_spent = (DateTime.now().millisecondsSinceEpoch - settings['interactivity']['mouse']['click_time'])/1000;
+        dist_mouse = sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse);
+        time_spent = (DateTime.now().millisecondsSinceEpoch - settings['interactivity']['mouse']['click_time']) / 1000;
 
-        if(time_spent > settings['interactivity']['modes']['bubble']['duration']){
+        if (time_spent > settings['interactivity']['modes']['bubble']['duration']) {
           settings['tmp']['bubble_duration_end'] = true;
         }
 
-        if(time_spent > settings['interactivity']['modes']['bubble']['duration']*2){
+        if (time_spent > settings['interactivity']['modes']['bubble']['duration'] * 2) {
           settings['tmp']['bubble_clicking'] = false;
           settings['tmp']['bubble_duration_end'] = false;
         }
       }
 
-
-      void process(num bubble_param, num particles_param, num p_obj_bubble, num p_obj, String id, double dist_mouse, double time_spent, double value){
-
-        if(bubble_param != particles_param){
-
-          if(!settings['tmp']['bubble_duration_end']){
-            if(dist_mouse <= settings['interactivity']['modes']['bubble']['distance']){
+      void process(
+        num bubble_param,
+        num particles_param,
+        num p_obj_bubble,
+        num p_obj,
+        String id,
+        double dist_mouse,
+        double time_spent,
+        double value
+      ) {
+        if (bubble_param != particles_param) {
+          if (!settings['tmp']['bubble_duration_end']) {
+            if (dist_mouse <= settings['interactivity']['modes']['bubble']['distance']) {
               num obj;
-              if(p_obj_bubble != null) obj = p_obj_bubble;
-              else obj = p_obj;
-              if(obj != bubble_param){
-              double value = p_obj - (time_spent * (p_obj - bubble_param) / settings['interactivity']['modes']['bubble']['duration']);
-                if(id == 'size') p.radius_bubble = value;
-                if(id == 'opacity') p.opacity_bubble = value;
+              if (p_obj_bubble != null) {
+                obj = p_obj_bubble;
+              } else {
+                obj = p_obj;
               }
-            }else{
-              if(id == 'size') p.radius_bubble = null;
-              if(id == 'opacity') p.opacity_bubble = null;
+              if (obj != bubble_param) {
+                double value = p_obj - (time_spent * (p_obj - bubble_param) / settings['interactivity']['modes']['bubble'] ['duration']);
+                if (id == 'size') p.radius_bubble = value;
+                if (id == 'opacity') p.opacity_bubble = value;
+              }
+            } else {
+              if (id == 'size') p.radius_bubble = null;
+              if (id == 'opacity') p.opacity_bubble = null;
             }
-          }else{
-            if(p_obj_bubble != null){
-            double value_tmp = p_obj - (time_spent * (p_obj - bubble_param) / settings['interactivity']['modes']['bubble']['duration']),
+          } else {
+            if (p_obj_bubble != null) {
+              double value_tmp = p_obj - (time_spent * (p_obj - bubble_param) / settings['interactivity']['modes']['bubble'] ['duration']),
                   dif = bubble_param - value_tmp;
                   value = bubble_param + dif;
-              if(id == 'size') p.radius_bubble = value;
-              if(id == 'opacity') p.opacity_bubble = value;
+              if (id == 'size') p.radius_bubble = value;
+              if (id == 'opacity') p.opacity_bubble = value;
+            }
             }
           }
-
         }
 
-      };
+      ;
 
-      if(settings['tmp']['bubble_clicking']){
+      if (settings['tmp']['bubble_clicking']) {
         /* size */
-        process(settings['interactivity']['modes']['bubble']['size'], settings['particles']['size']['value'], p.radius_bubble, p.radius, 'size', dist_mouse, time_spent, value);
+        process(
+          settings['interactivity']['modes']['bubble']['size'],
+          settings['particles']['size']['value'],
+          p.radius_bubble,
+          p.radius,
+          'size',
+          dist_mouse,
+          time_spent,
+          value
+        );
         /* opacity */
-        process(settings['interactivity']['modes']['bubble']['opacity'], settings['particles']['opacity']['value'], p.opacity_bubble, p.opacity, 'opacity', dist_mouse, time_spent, value);
+        process(
+          settings['interactivity']['modes']['bubble']['opacity'],
+          settings['particles']['opacity']['value'],
+          p.opacity_bubble,
+          p.opacity,
+          'opacity',
+          dist_mouse,
+          time_spent,
+          value
+        );
       }
     }
   }
 
-  void _repulseParticle(Particle p){
-
-    if(settings['interactivity']['events']['onhover']['enable'] && settings['interactivity']['events']['onhover']['mode'].contains('repulse') && settings['interactivity']['status'] == 'mousemove') {
-
+  void _repulseParticle(Particle p) {
+    if (settings['interactivity']['events']['onhover']['enable'] &&
+        settings['interactivity']['events']['onhover']['mode'].contains('repulse') &&
+        settings['interactivity']['status'] == 'mousemove') {
       num dx_mouse = p.x - settings['interactivity']['mouse']['pos_x'],
           dy_mouse = p.y - settings['interactivity']['mouse']['pos_y'];
-          double dist_mouse = sqrt(dx_mouse*dx_mouse + dy_mouse*dy_mouse);
+      double dist_mouse = sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse);
 
-      Map<String, double> normVec = {'x': dx_mouse/dist_mouse, 'y': dy_mouse/dist_mouse};
+      Map<String, double> normVec = {
+        'x': dx_mouse / dist_mouse,
+        'y': dy_mouse / dist_mouse
+      };
 
       var repulseRadius = settings['interactivity']['modes']['repulse']['distance'],
           velocity = 100,
-          repulseFactor = clamp((1/repulseRadius)*(-1*pow(dist_mouse/repulseRadius,2)+1)*repulseRadius*velocity, 0, 50);
+          repulseFactor = clamp(
+            (1 / repulseRadius) * (-1 * pow(dist_mouse / repulseRadius, 2) + 1) * repulseRadius * velocity,
+            0,
+            50
+          );
 
       Map<String, double> pos = {
         'x': p.x + normVec['x'] * repulseFactor,
         'y': p.y + normVec['y'] * repulseFactor
       };
 
-      if(settings['particles']['move']['out_mode'] == 'bounce'){
-        if(pos['x'] - p.radius > 0 && pos['x'] + p.radius < canvasWidth) p.x = pos['x'];
-        if(pos['y'] - p.radius > 0 && pos['y'] + p.radius < canvasHeight) p.y = pos['y'];
-      }else{
+      if (settings['particles']['move']['out_mode'] == 'bounce') {
+        if (pos['x'] - p.radius > 0 && pos['x'] + p.radius < canvasWidth)
+          p.x = pos['x'];
+        if (pos['y'] - p.radius > 0 && pos['y'] + p.radius < canvasHeight)
+          p.y = pos['y'];
+      } else {
         p.x = pos['x'];
         p.y = pos['y'];
       }
-
-    }
-
-
-    else if(settings['interactivity']['events']['onclick']['enable'] && settings['interactivity']['events']['onclick']['mode'].contains('repulse')) {
-
-      if(!settings['tmp']['repulse_finish'] != null && settings['tmp']['repulse_finish']){
+    } else if (settings['interactivity']['events']['onclick']['enable'] &&
+        settings['interactivity']['events']['onclick']['mode']
+            .contains('repulse')) {
+      if (!settings['tmp']['repulse_finish'] != null &&
+          settings['tmp']['repulse_finish']) {
         settings['tmp']['repulse_count']++;
-        if(settings['tmp']['repulse_count'] == settings['particles']['array'].length){
+        if (settings['tmp']['repulse_count'] == settings['particles']['array'].length) {
           settings['tmp']['repulse_finish'] = true;
         }
       }
 
-      if(settings['tmp']['repulse_clicking']){
-
-        num repulseRadius = pow(settings['interactivity']['modes']['repulse']['distance']/6, 3);
+      if (settings['tmp']['repulse_clicking']) {
+        num repulseRadius = pow(
+            settings['interactivity']['modes']['repulse']['distance'] / 6, 3);
 
         num dx = settings['interactivity']['mouse']['click_pos_x'] - p.x,
             dy = settings['interactivity']['mouse']['click_pos_y'] - p.y,
-            d = dx*dx + dy*dy;
+            d = dx * dx + dy * dy;
 
         double force = -repulseRadius / d * 1;
 
-        void process(){
-
-          double f = atan2(dy,dx);
+        void process() {
+          double f = atan2(dy, dx);
           p.vx = force * cos(f);
           p.vy = force * sin(f);
 
-          if(settings['particles']['move']['out_mode'] == 'bounce'){
-            Map<String, double> pos = {
-              'x': p.x + p.vx,
-              'y': p.y + p.vy
-            };
-            if (pos['x'] + p.radius > canvasWidth) p.vx = -p.vx;
+          if (settings['particles']['move']['out_mode'] == 'bounce') {
+            Map<String, double> pos = {'x': p.x + p.vx, 'y': p.y + p.vy};
+            if (pos['x'] + p.radius > canvasWidth) {
+              p.vx = -p.vx;
+            }
             else if (pos['x'] - p.radius < 0) p.vx = -p.vx;
-            if (pos['y'] + p.radius > canvasHeight) p.vy = -p.vy;
-            else if (pos['y'] - p.radius < 0) p.vy = -p.vy;
+            if (pos['y'] + p.radius > canvasHeight) {
+              p.vy = -p.vy;
+            } else if (pos['y'] - p.radius < 0) {
+              p.vy = -p.vy;
+            }
           }
-
         }
 
         // default
-        if(d <= repulseRadius){
+        if (d <= repulseRadius) {
           process();
         }
 
@@ -786,11 +806,8 @@ class Particles {
         //   process();
         // }
 
-
-      }else{
-
-        if(settings['tmp']['repulse_clicking'] == false){
-
+      } else {
+        if (settings['tmp']['repulse_clicking'] == false) {
           p.vx = p.vxI;
           p.vy = p.vyI;
         }
@@ -798,21 +815,21 @@ class Particles {
     }
   }
 
-  void _grabParticle(Particle p){
-
-    if(settings['interactivity']['events']['onhover']['enable']  && settings['interactivity']['events']['onhover']['mode'].contains('grab') && settings['interactivity']['status'] == 'mousemove'){
-
+  void _grabParticle(Particle p) {
+    if (settings['interactivity']['events']['onhover']['enable'] &&
+        settings['interactivity']['events']['onhover']['mode'].contains('grab') &&
+        settings['interactivity']['status'] == 'mousemove') {
       num dx_mouse = p.x - settings['interactivity']['mouse']['pos_x'],
           dy_mouse = p.y - settings['interactivity']['mouse']['pos_y'],
-          dist_mouse = sqrt(dx_mouse*dx_mouse + dy_mouse*dy_mouse);
+          dist_mouse = sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse);
 
       /* draw a line between the cursor and the particle if the distance between them is under the config distance */
-      if(dist_mouse <= settings['interactivity']['modes']['grab']['distance']){
+      if (dist_mouse <= settings['interactivity']['modes']['grab']['distance']) {
+        double opacity_line = settings['interactivity']['modes']['grab']
+                ['line_linked']['opacity'] -
+            (dist_mouse / (1 / settings['interactivity']['modes']['grab'] ['line_linked']['opacity'])) / settings['interactivity']['modes']['grab']['distance'];
 
-        double opacity_line = settings['interactivity']['modes']['grab']['line_linked']['opacity'] - (dist_mouse / (1/settings['interactivity']['modes']['grab']['line_linked']['opacity'])) / settings['interactivity']['modes']['grab']['distance'];
-
-        if(opacity_line > 0){
-
+        if (opacity_line > 0) {
           /* style */
           Map<String, int> color_line = settings['particles']['line_linked']['color_rgb_line'];
           ctx.strokeStyle = 'rgba(${color_line['r']},${color_line['g']},${color_line['b']},$opacity_line)';
@@ -830,30 +847,25 @@ class Particles {
     }
   }
 
-  void _eventsListeners(){
-
+  void _eventsListeners() {
     /* events target element */
-    if(settings['interactivity']['detect_on'] == 'window'){
+    if (settings['interactivity']['detect_on'] == 'window') {
       settings['interactivity']['el'] = window;
-    }else{
+    } else {
       settings['interactivity']['el'] = canvas;
     }
 
-
     /* detect mouse pos - on hover / click event */
-    if(settings['interactivity']['events']['onhover']['enable'] || settings['interactivity']['events']['onclick']['enable']){
-
+    if (settings['interactivity']['events']['onhover']['enable'] ||
+        settings['interactivity']['events']['onclick']['enable']) {
       /* el on mousemove */
-      settings['interactivity']['el'].onMouseMove.listen((MouseEvent e){
+      settings['interactivity']['el'].onMouseMove.listen((MouseEvent e) {
+        int pos_x = e.client.x, pos_y = e.client.y;
 
-        int pos_x = e.client.x,
-            pos_y = e.client.y;
-
-        if(settings['interactivity']['detect_on'] == 'window'){
+        if (settings['interactivity']['detect_on'] == 'window') {
           pos_x = e.client.x;
           pos_y = e.client.y;
-        }
-        else{
+        } else {
           pos_x = e.offset.x ?? e.client.x;
           pos_y = e.offset.y ?? e.client.y;
         }
@@ -861,47 +873,38 @@ class Particles {
         settings['interactivity']['mouse']['pos_x'] = pos_x;
         settings['interactivity']['mouse']['pos_y'] = pos_y;
 
-        if(settings['tmp']['retina']){
+        if (settings['tmp']['retina']) {
           settings['interactivity']['mouse']['pos_x'] *= _pxratio;
           settings['interactivity']['mouse']['pos_y'] *= _pxratio;
         }
 
         settings['interactivity']['status'] = 'mousemove';
-
       });
 
       /* el on onmouseleave */
-      settings['interactivity']['el'].addEventListener('mouseleave', (e){
-
+      settings['interactivity']['el'].addEventListener('mouseleave', (e) {
         settings['interactivity']['mouse']['pos_x'] = null;
         settings['interactivity']['mouse']['pos_y'] = null;
         settings['interactivity']['status'] = 'mouseleave';
-
       });
-
     }
 
     /* on click event */
-    if(settings['interactivity']['events']['onclick']['enable']){
-
-      settings['interactivity']['el'].addEventListener('click', (e){
-
+    if (settings['interactivity']['events']['onclick']['enable']) {
+      settings['interactivity']['el'].addEventListener('click', (e) {
         settings['interactivity']['mouse']['click_pos_x'] = settings['interactivity']['mouse']['pos_x'];
         settings['interactivity']['mouse']['click_pos_y'] = settings['interactivity']['mouse']['pos_y'];
         settings['interactivity']['mouse']['click_time'] = DateTime.now().millisecondsSinceEpoch;
 
-        if(settings['interactivity']['events']['onclick']['enable']){
-
-          switch(settings['interactivity']['events']['onclick']['mode']){
-
+        if (settings['interactivity']['events']['onclick']['enable']) {
+          switch (settings['interactivity']['events']['onclick']['mode']) {
             case 'push':
-              if(settings['particles']['move']['enable']){
-                _pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
-              }else{
-                if(settings['interactivity']['modes']['push']['particles_nb'] == 1){
+              if (settings['particles']['move']['enable']) {
+                _pushParticles(settings['interactivity']['modes']['push']['particles_nb'],settings['interactivity']['mouse']);
+              } else {
+                if (settings['interactivity']['modes']['push']['particles_nb'] == 1) {
                   _pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
-                }
-                else if(settings['interactivity']['modes']['push']['particles_nb'] > 1){
+                } else if (settings['interactivity']['modes']['push']['particles_nb'] > 1) {
                   _pushParticles(settings['interactivity']['modes']['push']['particles_nb']);
                 }
               }
@@ -919,9 +922,12 @@ class Particles {
               settings['tmp']['repulse_clicking'] = true;
               settings['tmp']['repulse_count'] = 0;
               settings['tmp']['repulse_finish'] = false;
-              new Timer(new Duration(milliseconds: (settings['interactivity']['modes']['repulse']['duration']*1000).round()), (){
-                settings['tmp']['repulse_clicking'] = false;
-              });
+              new Timer(
+                new Duration(milliseconds: (settings['interactivity']['modes']['repulse']['duration'] * 1000).round()),
+                () {
+                  settings['tmp']['repulse_clicking'] = false;
+                }
+              );
             break;
           }
         }
@@ -929,14 +935,12 @@ class Particles {
     }
   }
 
-  void _densityAutoParticles(){
-
-    if(settings['particles']['number']['density']['enable']){
-
+  void _densityAutoParticles() {
+    if (settings['particles']['number']['density']['enable']) {
       /* calc area */
       double area = canvas.width * canvas.height / 1000;
-      if(settings['tmp']['retina']){
-        area = area/(_pxratio*2);
+      if (settings['tmp']['retina']) {
+        area = area / (_pxratio * 2);
       }
 
       /* calc number of particles based on density area */
@@ -944,56 +948,53 @@ class Particles {
 
       /* add or remove X particles */
       int missing_particles = settings['particles']['array'].length - nb_particles;
-      if(missing_particles < 0) _pushParticles((missing_particles).abs());
-      else _removeParticles(missing_particles);
+      if (missing_particles < 0) {
+        _pushParticles((missing_particles).abs());
+      } else {
+        _removeParticles(missing_particles);
+      }
     }
   }
 
   /// Stops drawing the particles and removes the [canvas]
-  void destroyParticles(){
+  void destroyParticles() {
     cancelRequestAnimFrame(_drawAnimFrame);
     canvas.remove();
   }
 
   /// Opens the current image displaying in the [canvas] in a new tab
-  void exportImg(){
+  void exportImg() {
     window.open(canvas.toDataUrl('image/png'), '_blank');
   }
 
-  void _loadImg(type){
-
+  void _loadImg(type) {
     settings['tmp']['img_error'] = null;
 
-    if(settings['particles']['shape']['image']['src'] != ''){
-
-      if(type == 'svg'){
+    if (settings['particles']['shape']['image']['src'] != '') {
+      if (type == 'svg') {
         HttpRequest req = new HttpRequest();
         req.open('GET', settings['particles']['shape']['image']['src']);
         req.onReadyStateChange.listen((data) {
-          if(req.readyState == 4){
-            if(req.status == 200){
+          if (req.readyState == 4) {
+            if (req.status == 200) {
               settings['tmp']['source_svg'] = req.response;
               _checkBeforeDraw();
-            }else{
+            } else {
               print('Error pJS - Image not found');
               settings['tmp']['img_error'] = true;
             }
           }
         });
         req.send();
-
-      }else{
-
+      } else {
         ImageElement img = new ImageElement();
         img.addEventListener('load', (e) {
           settings['tmp']['img_obj'] = img;
           _checkBeforeDraw();
         });
         img.src = settings['particles']['shape']['image']['src'];
-
       }
-
-    }else{
+    } else {
       print('Error pJS - No image.src');
       settings['tmp']['img_error'] = true;
     }
@@ -1001,66 +1002,69 @@ class Particles {
 
   int _drawAnimFrame;
 
-  void _draw([_]){
-
-    if(settings['particles']['shape']['type'] == 'image'){
-
-      if(settings['tmp']['img_type'] == 'svg'){
-
-        if(settings['tmp']['count_svg'] >= settings['particles']['number']['value']){
+  void _draw([_]) {
+    if (settings['particles']['shape']['type'] == 'image') {
+      if (settings['tmp']['img_type'] == 'svg') {
+        if (settings['tmp']['count_svg'] >=
+            settings['particles']['number']['value']) {
           _particlesDraw();
-          if(!settings['particles']['move']['enable']) cancelRequestAnimFrame(_drawAnimFrame);
-          else _drawAnimFrame = requestAnimFrame(_draw);
-        }else{
+          if (!settings['particles']['move']['enable']) {
+            cancelRequestAnimFrame(_drawAnimFrame);
+          } else {
+            _drawAnimFrame = requestAnimFrame(_draw);
+          }
+        } else {
           //console.log('still loading...');
-          if(!settings['tmp']['img_error']) _drawAnimFrame = requestAnimFrame(_draw);
+          if (!settings['tmp']['img_error']) {
+            _drawAnimFrame = requestAnimFrame(_draw);
+          }
         }
-
-      }else{
-
-        if(settings['tmp']['img_obj'] != null){
+      } else {
+        if (settings['tmp']['img_obj'] != null) {
           _particlesDraw();
-          if(!settings['particles']['move']['enable']) cancelRequestAnimFrame(_drawAnimFrame);
-          else _drawAnimFrame = requestAnimFrame(_draw);
-        }else{
-          if(!settings['tmp']['img_error']) _drawAnimFrame = requestAnimFrame(_draw);
+          if (!settings['particles']['move']['enable']) {
+            cancelRequestAnimFrame(_drawAnimFrame);
+          } else {
+            _drawAnimFrame = requestAnimFrame(_draw);
+          }
+        } else {
+          if (!settings['tmp']['img_error']) {
+            _drawAnimFrame = requestAnimFrame(_draw);
+          }
         }
-
       }
-
-    }else{
+    } else {
       _particlesDraw();
-      if(!settings['particles']['move']['enable']) cancelRequestAnimFrame(_drawAnimFrame);
-      else _drawAnimFrame = requestAnimFrame(_draw);
+      if (!settings['particles']['move']['enable']) {
+        cancelRequestAnimFrame(_drawAnimFrame);
+      } else {
+        _drawAnimFrame = requestAnimFrame(_draw);
+      }
     }
   // requestAnimFrame(draw);
   }
 
-  void _checkBeforeDraw(){
+  void _checkBeforeDraw() {
     // if shape is image
-    if(settings['particles']['shape']['type'] == 'image'){
-
-      if(settings['tmp']['img_type'] == 'svg' && settings['tmp']['source_svg'] == null){
+    if (settings['particles']['shape']['type'] == 'image') {
+      if (settings['tmp']['img_type'] == 'svg' &&
+          settings['tmp']['source_svg'] == null) {
         settings['tmp']['checkAnimFrame'] = requestAnimFrame(settings['tmp']['checkAnimFrame']);
-      }else{
+      } else {
         //console.log('images loaded! cancel check');
         cancelRequestAnimFrame(settings['tmp']['checkAnimFrame']);
-        if(!settings['tmp']['img_error']){
+        if (!settings['tmp']['img_error']) {
           _init();
           _draw();
         }
-
       }
-
-    }else{
+    } else {
       _init();
       _draw();
     }
-
   }
 
-  void _init(){
-
+  void _init() {
     /* init canvas + particles */
     _retinaInit();
     _canvasSize();
@@ -1070,14 +1074,13 @@ class Particles {
 
     /* particles.line_linked - convert hex colors to rgb */
     settings['particles']['line_linked']['color_rgb_line'] = hexToRgb(settings['particles']['line_linked']['color']);
-
   }
 
-  void _start(){
-    if(settings['particles']['shape']['type'].contains('image')){
+  void _start() {
+    if (settings['particles']['shape']['type'].contains('image')) {
       settings['tmp']['img_type'] = settings['particles']['shape']['image']['src'].substring(settings['particles']['shape']['image']['src'].length - 3);
       _loadImg(settings['tmp']['img_type']);
-    }else{
+    } else {
       _checkBeforeDraw();
     }
   }
