@@ -449,6 +449,7 @@ class Particles {
     settings['particles']['array'] = [];
   }
 
+  /// Refreshes the particles' canvas. Can be used if you changed the configuration
   void particlesRefresh(){
 
     /* init all */
