@@ -153,7 +153,7 @@ class Particles {
   };
 
   /// The user provided parameters Map
-   Map<String, dynamic> config;
+  Map<String, dynamic> config;
 
   /// The class constructor. It won't start drawing particles until [start()] is executed. 
   Particles({String this.id: 'particles', Map<String, dynamic> this.config});
