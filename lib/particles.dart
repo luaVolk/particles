@@ -6,17 +6,23 @@ import 'src/particle.dart';
 
 class Particles {
 
+  /// The id of the element that will contain the particles' [canvas]
   String id;
 
+  /// The canvas where the particles will be drawn
   CanvasElement canvas;
+  /// The context of the [canvas] where the particles will be drawn
   CanvasRenderingContext2D ctx;
+  /// The width of the [canvas] where the particles will be drawn
   int canvasWidth;
+  /// The height of the [canvas] where the particles will be drawn
   int canvasHeight;
 
   num _pxratio;
 
   Random _rng = new Random();
 
+  /// The configuration Map that will be used
   Map<String, dynamic> settings = {
     'particles': {
       'number': {
@@ -144,10 +150,13 @@ class Particles {
     'tmp': {}
   };
 
+  /// The user provided parameters Map
    Map<String, dynamic> config;
 
+  /// The class constructor. It won't start drawing particles until [start()] is executed. 
   Particles({String this.id: 'particles' , Map<String, dynamic> this.config});
 
+  /// Starts drawing particles
   Particles start() {
 
     _createCanvas();
@@ -938,11 +947,13 @@ class Particles {
     }
   }
 
+  /// Stops drawing the particles and removes the [canvas]
   void destroyParticles(){
     cancelRequestAnimFrame(_drawAnimFrame);
     canvas.remove();
   }
 
+  /// Opens the current image displaying in the [canvas] in a new tab
   void exportImg(){
     window.open(canvas.toDataUrl('image/png'), '_blank');
   }
