@@ -155,7 +155,7 @@ key | type | default | notes
 `particles > shape > character > font` | `String` | `"arial"`
 `particles > shape > character > style` | `String` | `"normal"` | Possible values are the same as in the CSS font-style property
 `particles > shape > character > weight` | `String` | `"normal"` | Possible values are the same as in the CSS font-style property
-`particles > shape > image > src` |`String` | `"particle.png"` | Needs cors access
+`particles > shape > image > src` |`String` | `"particle.png"`
 `particles > shape > image > width` | `num` | `100`
 `particles > shape > image > height` | `num` | `100`
 `particles > opacity > value` | `num` | `1` | 0 to 1
