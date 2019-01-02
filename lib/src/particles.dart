@@ -1043,14 +1043,13 @@ class Particles {
 
   void _init() {
     /* init canvas + particles */
+    settings['particles']['line_linked']['color_rgb_line'] = hexToRgb(settings['particles']['line_linked']['color']);
+
     _retinaInit();
     _canvasSize();
     _canvasPaint();
     _particlesCreate();
     _densityAutoParticles();
-
-    /* particles.line_linked - convert hex colors to rgb */
-    settings['particles']['line_linked']['color_rgb_line'] = hexToRgb(settings['particles']['line_linked']['color']);
   }
 
   void _start() {
