@@ -1,0 +1,14 @@
+.directory
+.DS_Store
+Thumbs.db
+
+.packages
+.pub/
+.dart_tool/
+pubspec.lock
+doc
+
+.vscode
+.atom
+
+example/*.js*
