@@ -1,3 +1,6 @@
+/// particles is a highly configurable library to draw particles in the browsers' canvas
+library particles;
+
 import 'dart:html';
 import 'dart:math';
 import 'dart:async';
