@@ -85,6 +85,7 @@ class Particles {
         'straight': false,
         'out_mode': 'out',
         'bounce': false,
+        'parallax': false,
         'attract': {
           'enable': false,
           'rotateX': 3000,

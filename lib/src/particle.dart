@@ -142,13 +142,21 @@ class Particle {
       this.vx = velbase['x'];
       this.vy = velbase['y'];
       
-      if (_particles.settings['particles']['move']['random']){
+      if (_particles.settings['particles']['move']['parallax']) {
+        this.vx = velbase['x'] * this.radius;
+        this.vy = velbase['y'] * this.radius;
+      } else if (_particles.settings['particles']['move']['random']){
         this.vx = this.vx * (_rng.nextDouble());
         this.vy = this.vy * (_rng.nextDouble());
       }
     }else{
-      this.vx = velbase['x'] + _rng.nextDouble()-0.5;
-      this.vy = velbase['y'] + _rng.nextDouble()-0.5;
+      if (_particles.settings['particles']['move']['parallax']) {
+        this.vx = (velbase['x'] + _rng.nextInt(2) -0.5) * this.radius;
+        this.vy = (velbase['y'] + _rng.nextInt(2) -0.5) * this.radius;
+      } else {
+        this.vx = velbase['x'] + _rng.nextDouble()-0.5;
+        this.vy = velbase['y'] + _rng.nextDouble()-0.5;
+      }
     }
 
     // var theta = 2.0 * Math.PI * _rng.nextDouble();

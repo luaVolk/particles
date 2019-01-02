@@ -1,6 +1,6 @@
 # Particles
 
-Port of [Vincent Garreau' particles.js](https://github.com/VincentGarreau/particles.js) written in Dart.
+Port of [Vincent Garreau' particles.js](https://github.com/VincentGarreau/particles.js) written in Dart with added features.
 
 ## Instalation
 
@@ -90,6 +90,7 @@ Map<String, dynamic> settings = {
       'out_mode': 'out',
       'parallax': true,
       'bounce': false,
+      'parallax': false,
       'attract': {
         'enable': false,
         'rotateX': 3000,
@@ -180,6 +181,7 @@ key | type | default | notes
 `particles > move > random` | `bool` |`false`
 `particles > move > straight` | `bool` | `false`
 `particles > move > out_mode` | `String` | `"out"` | Possible values: <br /> `"out"` <br /> `"bounce"`
+`particles > move > parallax` | `bool` | `false`
 `particles > move > bounce` | `bool` | `false` | Bounce between particles
 `particles > move > attract > enable` | `bool` |`false`
 `particles > move > attract > rotateX` | `num` | `3000`
