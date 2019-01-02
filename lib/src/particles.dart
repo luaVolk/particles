@@ -153,7 +153,7 @@ class Particles {
   };
 
   /// The user provided parameters Map
-   Map<String, dynamic> config;
+  Map<String, dynamic> config;
 
   /// The class constructor. It won't start drawing particles until [start()] is executed. 
   Particles({String this.id: 'particles', Map<String, dynamic> this.config});
@@ -301,14 +301,6 @@ class Particles {
     for (int i = 0; i < settings['particles']['array'].length; i++) {
       /* the particle */
       Particle p = settings['particles']['array'][i];
-
-      // var d = ( dx = pJS.interactivity.mouse.click_pos_x - p.x ) * dx + ( dy = pJS.interactivity.mouse.click_pos_y - p.y ) * dy;
-      // var f = -BANG_SIZE / d;
-      // if ( d < BANG_SIZE ) {
-      //     var t = Math.atan2( dy, dx );
-      //     p.vx = f * Math.cos(t);
-      //     p.vy = f * Math.sin(t);
-      // }
 
       /* move the particle */
       if (settings['particles']['move']['enable']) {
@@ -488,7 +480,6 @@ class Particles {
         Map<String, int> color_line = settings['particles']['line_linked']['color_rgb_line'];
         ctx.strokeStyle = 'rgba(${color_line['r']},${color_line['g']},${color_line['b']},$opacity_line)';
         ctx.lineWidth = settings['particles']['line_linked']['width'];
-        //ctx.lineCap = 'round'; /* performance issue */
 
         /* path */
         ctx.beginPath();
@@ -792,19 +783,9 @@ class Particles {
           }
         }
 
-        // default
         if (d <= repulseRadius) {
           process();
         }
-
-        // bang - slow motion mode
-        // if(!pJS.tmp.repulse_finish){
-        //   if(d <= repulseRadius){
-        //     process();
-        //   }
-        // }else{
-        //   process();
-        // }
 
       } else {
         if (settings['tmp']['repulse_clicking'] == false) {
@@ -834,7 +815,6 @@ class Particles {
           Map<String, int> color_line = settings['particles']['line_linked']['color_rgb_line'];
           ctx.strokeStyle = 'rgba(${color_line['r']},${color_line['g']},${color_line['b']},$opacity_line)';
           ctx.lineWidth = settings['particles']['line_linked']['width'];
-          //ctx.lineCap = 'round'; /* performance issue */
 
           /* path */
           ctx.beginPath();
@@ -1014,7 +994,6 @@ class Particles {
             _drawAnimFrame = requestAnimFrame(_draw);
           }
         } else {
-          //console.log('still loading...');
           if (!settings['tmp']['img_error']) {
             _drawAnimFrame = requestAnimFrame(_draw);
           }
@@ -1041,7 +1020,6 @@ class Particles {
         _drawAnimFrame = requestAnimFrame(_draw);
       }
     }
-  // requestAnimFrame(draw);
   }
 
   void _checkBeforeDraw() {
@@ -1051,7 +1029,6 @@ class Particles {
           settings['tmp']['source_svg'] == null) {
         settings['tmp']['checkAnimFrame'] = requestAnimFrame(settings['tmp']['checkAnimFrame']);
       } else {
-        //console.log('images loaded! cancel check');
         cancelRequestAnimFrame(settings['tmp']['checkAnimFrame']);
         if (!settings['tmp']['img_error']) {
           _init();
