@@ -38,6 +38,12 @@ class Particles {
         'polygon': {
           'nb_sides': 5
         },
+        'character': {
+          'value': 'P',
+          'font': 'arial',
+          'style': 'normal',
+          'weight': 'normal',
+        },
         'image': {
           'src': '',
           'width': 100,

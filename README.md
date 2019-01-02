@@ -42,6 +42,12 @@ Map<String, dynamic> settings = {
       'polygon': {
         'nb_sides': 5
       },
+      'character': {
+        'value': 'P',
+        'font': 'arial',
+        'style': 'normal',
+        'weight': 'normal',
+      },
       'image': {
         'src': '',
         'width': 100,
@@ -144,6 +150,10 @@ key | type | default | notes
 `particles > shape > stroke > width` | `num` | `0`
 `particles > shape > stroke > color` | `String` | `"#FF0000"`
 `particles > shape > polygon > nb_slides` | `num` | `5`
+`particles > shape > character > value` | `String` | `"P"`
+`particles > shape > character > font` | `String` | `"arial"`
+`particles > shape > character > style` | `String` | `"normal"` | Possible values are the same as in the CSS font-style property
+`particles > shape > character > weight` | `String` | `"normal"` | Possible values are the same as in the CSS font-style property
 `particles > shape > image > src` |`String` | `"particle.png"` | Needs cors access
 `particles > shape > image > width` | `num` | `100`
 `particles > shape > image > height` | `num` | `100`

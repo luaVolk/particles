@@ -25,6 +25,7 @@ class Particle {
   String shape;
 
   Map img;
+  dynamic character;
 
   num vs;
   num vx;
@@ -181,6 +182,14 @@ class Particle {
           this.img['loaded'] = false;
         }
       }
+    } else if (this.shape == 'char' || this.shape == 'character') {
+      if (_particles.settings['particles']['shape']['character']['value'] is String) {
+        this.character = _particles.settings['particles']['shape']['character']['value'];
+      } else {
+        if (_particles.settings['particles']['shape']['character']['value'] is List) {
+          this.character = _particles.settings['particles']['shape']['character']['value'][(_rng.nextDouble() * _particles.settings['particles']['shape']['character']['value'].length).floor()];          
+        }
+      }
     }
   }
 
@@ -310,6 +319,12 @@ class Particle {
           _particles.settings['particles']['shape']['polygon']['nb_sides'], // sideCountNumerator
           2 // sideCountDenominator
         );
+      break;
+
+      case 'char':
+      case 'character':
+        _particles.ctx.font = '${_particles.settings['particles']['shape']['character']['style']} ${_particles.settings['particles']['shape']['character']['weight']} ${radius*2}px ${_particles.settings['particles']['shape']['character']['font']}';
+        _particles.ctx.fillText(this.character, this.x-radius, this.y-radius);
       break;
 
       case 'image':
