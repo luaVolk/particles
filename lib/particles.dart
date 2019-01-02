@@ -943,7 +943,7 @@ class Particles {
     canvas.remove();
   }
 
-  exportImg(){
+  void exportImg(){
     window.open(canvas.toDataUrl('image/png'), '_blank');
   }
 
