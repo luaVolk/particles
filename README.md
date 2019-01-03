@@ -154,28 +154,28 @@ key | type | default | notes
 ----|---------|------|------
 `particles > number > value` | `num` | `100`
 `particles > number > density > enable` | `bool` | `true`
-`particles > number > density > value_area` | number | `800`
+`particles > number > density > value_area` | `num` | `800`
 `particles > color > value` | `String`: Hex or `"random"`<br /> `List<String>`: Hex <br /> `Map<String, int>`: RGB or HSL | `#FFFFFF`| Examples: <br /> `"#b61924"` <br /> `["#b61924", "#333333", "999999"]` <br />`{r:182, g:25, b:36}` <br />  `{h:356, s:76, l:41}` <br /> `"random"`
-`particles > shape > type` | `String` <br /> `List<String>` | `"circle"` | Examples: <br /> `"circle"` <br /> `"edge"` <br /> `"triangle"` <br /> `"polygon"` <br /> `"star"` <br /> `"image"`
+`particles > shape > type` | `String` <br /> `List<String>` | `"circle"` | Possible values: <br /> `"circle"` <br /> `"edge"` <br /> `"triangle"` <br /> `"polygon"` <br /> `"star"` <br /> `"image"`
 `particles > shape > stroke > width` | `num` | `0`
 `particles > shape > stroke > color` | `String` | `"#FF0000"`
 `particles > shape > polygon > nb_slides` | `num` | `5`
-`particles > shape > character > value` | `String` | `"P"`
+`particles > shape > character > value` | `String` <br /> `List<String>` | `"P"`
 `particles > shape > character > font` | `String` | `"arial"`
 `particles > shape > character > style` | `String` | `"normal"` | Possible values are the same as in the CSS font-style property
-`particles > shape > character > weight` | `String` | `"normal"` | Possible values are the same as in the CSS font-style property
+`particles > shape > character > weight` | `String` | `"normal"` | Possible values are the same as in the CSS font-weight property
 `particles > shape > image > src` |`String` | `"particle.png"`
 `particles > shape > image > width` | `num` | `100`
 `particles > shape > image > height` | `num` | `100`
 `particles > opacity > value` | `num` | `1` | 0 to 1
-`particles > opacity > random` | `bool` | `false` 
-`particles > opacity > anim > enable` | `bool` | `false` 
+`particles > opacity > random` | `bool` | `false`
+`particles > opacity > anim > enable` | `bool` | `false`
 `particles > opacity > anim > speed` | `num` | `2`
 `particles > opacity > anim > opacity_min` | `num` | `0` | 0 to 1
 `particles > opacity > anim > sync` | `bool` | `false`
 `particles > size > value` | `num` | `10`
-`particles > size > random` | `bool` | `false` 
-`particles > size > anim > enable` | `bool` | `false` 
+`particles > size > random` | `bool` | `false`
+`particles > size > anim > enable` | `bool` | `false`
 `particles > size > anim > speed` | `num` | `20`
 `particles > size > anim > size_min` | `num` | `0`
 `particles > size > anim > sync` | `bool` | `false`
@@ -202,12 +202,12 @@ key | type | default | notes
 `interactivity > events > onclick > mode` | `String` <br /> `List<String>` | `"push"` | Possible values: <br /> `"push"` <br /> `"remove"` <br /> `"bubble"` <br /> `"repulse"`
 `interactivity > events > resize` | `bool` | `true`
 `interactivity > events > modes > grab > distance` | `num` | `100`
-`interactivity > events > modes > grab > line_linked.opacity` | `num` | `0.75` | 0 to 1
+`interactivity > events > modes > grab > line_linked > opacity` | `num` | `0.75` | 0 to 1
 `interactivity > events > modes > grab > outer_shape > enable` | `bool` | `false`
-`interactivity > events > modes > grab > outer_shape > type` | `String` | `"inherit"` | `"inherit"` will use `particles > line_linked >` <br /> values Possible values: <br /> `"inherit"` <br /> `"circle"` <br /> `"edge"` <br /> `"triangle"` <br /> `"polygon"` <br /> `"star"` <br /> `"image"`
+`interactivity > events > modes > grab > outer_shape > type` | `String` | `"inherit"` | `"inherit"` will use `particles > line_linked` <br /> values <br /> Possible values: <br /> `"inherit"` <br /> `"circle"` <br /> `"edge"` <br /> `"triangle"` <br /> `"polygon"` <br /> `"star"` <br /> `"image"`
 `interactivity > events > modes > grab > outer_shape > size` | `num` | `20` | Added to the particles' size
-`interactivity > events > modes > grab > outer_shape > stroke > width` | `String` `num` | `"inherit"` | `"inherit"` will use `particles > line_linked >` values
-`interactivity > events > modes > grab > outer_shape > stroke > color` | `String` | `"inherit"` | `"inherit"` will use `particles > line_linked >` values
+`interactivity > events > modes > grab > outer_shape > stroke > width` | `String` <br /> `num` | `"inherit"` | `"inherit"` will use `particles > line_linked` values
+`interactivity > events > modes > grab > outer_shape > stroke > color` | `String` | `"inherit"` | `"inherit"` will use `particles > line_linked` values
 `interactivity > events > modes > bubble > distance` | `num` | `100`
 `interactivity > events > modes > bubble > size` | `num` | `40`
 `interactivity > events > modes > bubble > duration` | `num` | `0.4` | in seconds
