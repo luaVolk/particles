@@ -850,7 +850,7 @@ class Particles {
               ctx.lineWidth = settings['interactivity']['modes']['grab']['outer_shape']['stroke']['width'];
             }
             
-            p.drawShape(shape, settings['interactivity']['modes']['grab']['outer_shape']['size'] + p.radius);
+            p.drawShape(shape, settings['interactivity']['modes']['grab']['outer_shape']['size'] + p.radius, true);
 
             ctx.stroke();
             ctx.closePath();

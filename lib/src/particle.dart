@@ -257,7 +257,7 @@ class Particle {
     c.restore();
   }
 
-  drawShape(String shape, num radius) {
+  drawShape(String shape, num radius, [stroke=false]) {
     switch (shape) {
       case 'circle':
         _particles.ctx.arc(this.x, this.y, radius, 0, pi * 2, false);
@@ -300,7 +300,11 @@ class Particle {
       case 'char':
       case 'character':
         _particles.ctx.font = '${_particles.settings['particles']['shape']['character']['style']} ${_particles.settings['particles']['shape']['character']['weight']} ${radius.round() * 2}px ${_particles.settings['particles']['shape']['character']['font']}';
+        if (stroke) {
+        _particles.ctx.strokeText(this.character, this.x - radius/2, this.y + radius/2);
+        } else {
         _particles.ctx.fillText(this.character, this.x - radius/2, this.y + radius/2);
+        }
         break;
 
       case 'image':
