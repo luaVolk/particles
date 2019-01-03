@@ -300,7 +300,7 @@ class Particle {
       case 'char':
       case 'character':
         _particles.ctx.font = '${_particles.settings['particles']['shape']['character']['style']} ${_particles.settings['particles']['shape']['character']['weight']} ${radius.round() * 2}px ${_particles.settings['particles']['shape']['character']['font']}';
-        _particles.ctx.fillText(this.character, this.x - radius, this.y - radius);
+        _particles.ctx.fillText(this.character, this.x - radius/2, this.y + radius/2);
         break;
 
       case 'image':
