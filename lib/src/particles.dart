@@ -1015,6 +1015,12 @@ class Particles {
 
   int _drawAnimFrame;
 
+  /**
+   * A function that will run every frame.
+   * Meant to be replaced with another function
+   */
+  Function everyFrame = () {};
+
   void _draw([_]) {
     if (settings['particles']['shape']['type'] == 'image') {
       if (settings['tmp']['img_type'] == 'svg') {
@@ -1053,6 +1059,8 @@ class Particles {
         _drawAnimFrame = requestAnimFrame(_draw);
       }
     }
+
+    everyFrame();
   }
 
   void _checkBeforeDraw() {
