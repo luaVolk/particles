@@ -1,5 +1,5 @@
 name: particles
-version: 0.0.1
+version: 0.0.2
 author: Volk <templar.volk@yandex.com>
 description: A highly configurble Dart library for creating interactive particles in the browser
 homepage: https://github.com/TemplarVolk/particles
