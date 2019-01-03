@@ -239,7 +239,7 @@ class Particle {
     }
   }
 
-  void _drawShape(c, startX, startY, sideLength, sideCountNumerator, sideCountDenominator) {
+  void _drawPolygon(c, startX, startY, sideLength, sideCountNumerator, sideCountDenominator) {
     int sideCount = sideCountNumerator * sideCountDenominator;
     double decimalSides = sideCountNumerator / sideCountDenominator;
     double interiorAngleDegrees = (180 * (decimalSides - 2)) / decimalSides;
@@ -254,8 +254,75 @@ class Particle {
       c.rotate(interiorAngle);
     }
     //c.stroke();
-    c.fill();
     c.restore();
+  }
+
+  drawShape(String shape, num radius) {
+    switch (shape) {
+      case 'circle':
+        _particles.ctx.arc(this.x, this.y, radius, 0, pi * 2, false);
+        break;
+
+      case 'edge':
+        _particles.ctx.rect(this.x - radius, this.y - radius, radius * 2, radius * 2);
+        break;
+
+      case 'triangle':
+        _drawPolygon(_particles.ctx, this.x - radius, this.y + radius / 1.66, radius * 2, 3, 2);
+        break;
+
+      case 'polygon':
+        _drawPolygon(
+          _particles.ctx,
+          this.x - radius /
+                  (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 3.5), // startX
+          this.y - radius / (2.66 / 3.5), // startY
+          radius * 2.66 /
+              (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 3), // sideLength
+          _particles.settings['particles']['shape']['polygon']['nb_sides'], // sideCountNumerator
+          1 // sideCountDenominator
+        );
+        break;
+
+      case 'star':
+        _drawPolygon(
+          _particles.ctx,
+          this.x - radius * 2 /
+                  (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 4), // startX
+          this.y - radius / (2 * 2.66 / 3.5), // startY
+          radius * 2 * 2.66 /
+              (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 3), // sideLength
+          _particles.settings['particles']['shape']['polygon']['nb_sides'], // sideCountNumerator
+          2 // sideCountDenominator
+        );
+        break;
+
+      case 'char':
+      case 'character':
+        _particles.ctx.font = '${_particles.settings['particles']['shape']['character']['style']} ${_particles.settings['particles']['shape']['character']['weight']} ${radius * 2}px ${_particles.settings['particles']['shape']['character']['font']}';
+        _particles.ctx.fillText(this.character, this.x - radius, this.y - radius);
+        break;
+
+      case 'image':
+        draw(img_obj) {
+          _particles.ctx.drawImageScaled(img_obj, this.x - radius,
+              this.y - radius, radius * 2, radius * 2 / this.img['ratio']);
+        }
+
+        var img_obj;
+
+        if (_particles.settings['tmp']['img_type'] == 'svg') {
+          img_obj = this.img['obj'];
+        } else {
+          img_obj = _particles.settings['tmp']['img_obj'];
+        }
+
+        if (img_obj != null) {
+          draw(img_obj);
+        }
+
+        break;
+    }
   }
 
   void _createSvgImg() {
@@ -313,71 +380,7 @@ class Particle {
     _particles.ctx.fillStyle = colorValue;
     _particles.ctx.beginPath();
 
-    switch (this.shape) {
-      case 'circle':
-        _particles.ctx.arc(this.x, this.y, radius, 0, pi * 2, false);
-        break;
-
-      case 'edge':
-        _particles.ctx.rect(this.x - radius, this.y - radius, radius * 2, radius * 2);
-        break;
-
-      case 'triangle':
-        _drawShape(_particles.ctx, this.x - radius, this.y + radius / 1.66, radius * 2, 3, 2);
-        break;
-
-      case 'polygon':
-        _drawShape(
-          _particles.ctx,
-          this.x - radius /
-                  (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 3.5), // startX
-          this.y - radius / (2.66 / 3.5), // startY
-          radius * 2.66 /
-              (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 3), // sideLength
-          _particles.settings['particles']['shape']['polygon']['nb_sides'], // sideCountNumerator
-          1 // sideCountDenominator
-        );
-        break;
-
-      case 'star':
-        _drawShape(
-          _particles.ctx,
-          this.x - radius * 2 /
-                  (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 4), // startX
-          this.y - radius / (2 * 2.66 / 3.5), // startY
-          radius * 2 * 2.66 /
-              (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 3), // sideLength
-          _particles.settings['particles']['shape']['polygon']['nb_sides'], // sideCountNumerator
-          2 // sideCountDenominator
-        );
-        break;
-
-      case 'char':
-      case 'character':
-        _particles.ctx.font = '${_particles.settings['particles']['shape']['character']['style']} ${_particles.settings['particles']['shape']['character']['weight']} ${radius * 2}px ${_particles.settings['particles']['shape']['character']['font']}';
-        _particles.ctx.fillText(this.character, this.x - radius, this.y - radius);
-        break;
-
-      case 'image':
-        draw(img_obj) {
-          _particles.ctx.drawImageScaled(img_obj, this.x - radius,
-              this.y - radius, radius * 2, radius * 2 / this.img['ratio']);
-        }
-
-        var img_obj;
-
-        if (_particles.settings['tmp']['img_type'] == 'svg') {
-          img_obj = this.img['obj'];
-        } else {
-          img_obj = _particles.settings['tmp']['img_obj'];
-        }
-
-        if (img_obj != null) {
-          draw(img_obj);
-        }
-
-        break;
-    }
+    drawShape(this.shape, radius);
 
     _particles.ctx.closePath();
 

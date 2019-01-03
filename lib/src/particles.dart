@@ -121,6 +121,15 @@ class Particles {
           'distance': 100,
           'line_linked':{
             'opacity': 1
+          },
+          'outer_shape': {
+            'enable': false,
+            'type': 'inherit',
+            'size': 20,
+            'stroke': {
+              'width': 'inherit',
+              'color': 'inherit'
+            },
           }
         },
         'bubble':{
@@ -806,8 +815,7 @@ class Particles {
 
       /* draw a line between the cursor and the particle if the distance between them is under the config distance */
       if (dist_mouse <= settings['interactivity']['modes']['grab']['distance']) {
-        double opacity_line = settings['interactivity']['modes']['grab']
-                ['line_linked']['opacity'] -
+        double opacity_line = settings['interactivity']['modes']['grab']['line_linked']['opacity'] -
             (dist_mouse / (1 / settings['interactivity']['modes']['grab'] ['line_linked']['opacity'])) / settings['interactivity']['modes']['grab']['distance'];
 
         if (opacity_line > 0) {
@@ -822,6 +830,31 @@ class Particles {
           ctx.lineTo(settings['interactivity']['mouse']['pos_x'], settings['interactivity']['mouse']['pos_y']);
           ctx.stroke();
           ctx.closePath();
+
+          if (settings['interactivity']['modes']['grab']['outer_shape']['enable']) {
+            ctx.beginPath();
+
+            String shape;
+            if (settings['interactivity']['modes']['grab']['outer_shape']['type'] != 'inherit') {
+              shape = settings['interactivity']['modes']['grab']['outer_shape']['type'];
+            } else {
+              shape = p.shape;
+            }
+
+            if (settings['interactivity']['modes']['grab']['outer_shape']['stroke']['color'] != 'inherit') {
+              Map<String, int> color = hexToRgb(settings['interactivity']['modes']['grab']['outer_shape']['stroke']['color']);
+              ctx.strokeStyle = 'rgba(${color['r']},${color['g']},${color['b']},$opacity_line)';
+            }
+
+            if (settings['interactivity']['modes']['grab']['outer_shape']['stroke']['width'] != 'inherit') {
+              ctx.lineWidth = settings['interactivity']['modes']['grab']['outer_shape']['stroke']['width'];
+            }
+            
+            p.drawShape(shape, settings['interactivity']['modes']['grab']['outer_shape']['size'] + p.radius);
+
+            ctx.stroke();
+            ctx.closePath();
+          }
         }
       }
     }
