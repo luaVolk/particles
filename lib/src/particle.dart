@@ -264,6 +264,7 @@ class Particle {
         break;
 
       case 'edge':
+      case 'square':
         _particles.ctx.rect(this.x - radius, this.y - radius, radius * 2, radius * 2);
         break;
 
