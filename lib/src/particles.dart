@@ -164,7 +164,7 @@ class Particles {
   /// The user provided parameters Map
   Map<String, dynamic> config;
 
-  /// The class constructor. It won't start drawing particles until [start()] is executed. 
+  /// The class constructor. It won't start drawing particles until [start()] is executed.
   Particles({String this.id: 'particles', Map<String, dynamic> this.config});
 
   /// Starts drawing particles
@@ -188,7 +188,7 @@ class Particles {
     };
 
       _eventsListeners();
-    
+
       _start();
 
       return this;
@@ -304,6 +304,7 @@ class Particles {
         this
       ));
     }
+    settings['particles']['array'].sort((a, b) => a.radius.compareTo(b.radius) as int);
   }
 
   void _particlesUpdate() {
@@ -522,7 +523,7 @@ class Particles {
     num dx = p1.x - p2.x, dy = p1.y - p2.y, dist_p = p1.radius + p2.radius;
 
     double dist = sqrt(dx * dx + dy * dy);
-    
+
     if (dist <= dist_p) {
       p1.vx = -p1.vx;
       p1.vy = -p1.vy;
@@ -551,6 +552,7 @@ class Particles {
         settings['particles']['tmp']['pushing'] = false;
       }
     }
+    settings['particles']['array'].sort((a, b) => a.radius.compareTo(b.radius) as int);
   }
 
   /* ---------- Particles functions - modes events ------------ */
@@ -849,7 +851,7 @@ class Particles {
             if (settings['interactivity']['modes']['grab']['outer_shape']['stroke']['width'] != 'inherit') {
               ctx.lineWidth = settings['interactivity']['modes']['grab']['outer_shape']['stroke']['width'];
             }
-            
+
             p.drawShape(shape, settings['interactivity']['modes']['grab']['outer_shape']['size'] + p.radius, true);
 
             ctx.stroke();
