@@ -533,6 +533,7 @@ class Particles {
     }
   }
 
+  /// Adds a specified amount of particles
   void pushParticles(nb, [pos]) {
     settings['particles']['tmp']['pushing'] = true;
 
@@ -557,6 +558,7 @@ class Particles {
 
   /* ---------- Particles functions - modes events ------------ */
 
+  /// Removes a specified amount of particles
   void removeParticles(nb) {
     settings['particles']['array'].removeRange(0, nb);
     if (!settings['particles']['move']['enable']) {
