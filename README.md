@@ -136,6 +136,7 @@ Map<String, dynamic> settings = {
       },
       'repulse':{
         'distance': 200,
+        'strength': 100,
         'duration': 0.4
       },
       'push':{
@@ -211,6 +212,7 @@ key | type | default | notes
 `interactivity > events > modes > bubble > distance` | `num` | `100`
 `interactivity > events > modes > bubble > size` | `num` | `40`
 `interactivity > events > modes > bubble > duration` | `num` | `0.4` | in seconds
+`interactivity > events > modes > repulse > strength` | `num` | `100`
 `interactivity > events > modes > repulse > distance` | `num` | `200`
 `interactivity > events > modes > repulse > duration` | `num` | `0.4` | in seconds
 `interactivity > events > modes > push > particles_nb` | `num` | `4`

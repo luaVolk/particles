@@ -141,6 +141,7 @@ class Particles {
         },
         'repulse':{
           'distance': 200,
+          'strength': 100,
           'duration': 0.4
         },
         'push':{
@@ -735,7 +736,7 @@ class Particles {
       };
 
       var repulseRadius = settings['interactivity']['modes']['repulse']['distance'],
-          velocity = 100,
+          velocity = settings['interactivity']['modes']['repulse']['strength'],
           repulseFactor = clamp(
             (1 / repulseRadius) * (-1 * pow(dist_mouse / repulseRadius, 2) + 1) * repulseRadius * velocity,
             0,
