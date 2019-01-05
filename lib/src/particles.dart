@@ -533,7 +533,7 @@ class Particles {
     }
   }
 
-  void _pushParticles(nb, [pos]) {
+  void pushParticles(nb, [pos]) {
     settings['particles']['tmp']['pushing'] = true;
 
     for (int i = 0; i < nb; i++) {
@@ -557,7 +557,7 @@ class Particles {
 
   /* ---------- Particles functions - modes events ------------ */
 
-  void _removeParticles(nb) {
+  void removeParticles(nb) {
     settings['particles']['array'].removeRange(0, nb);
     if (!settings['particles']['move']['enable']) {
       _particlesDraw();
@@ -915,18 +915,18 @@ class Particles {
           switch (settings['interactivity']['events']['onclick']['mode']) {
             case 'push':
               if (settings['particles']['move']['enable']) {
-                _pushParticles(settings['interactivity']['modes']['push']['particles_nb'],settings['interactivity']['mouse']);
+                pushParticles(settings['interactivity']['modes']['push']['particles_nb'],settings['interactivity']['mouse']);
               } else {
                 if (settings['interactivity']['modes']['push']['particles_nb'] == 1) {
-                  _pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
+                  pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
                 } else if (settings['interactivity']['modes']['push']['particles_nb'] > 1) {
-                  _pushParticles(settings['interactivity']['modes']['push']['particles_nb']);
+                  pushParticles(settings['interactivity']['modes']['push']['particles_nb']);
                 }
               }
             break;
 
             case 'remove':
-              _removeParticles(settings['interactivity']['modes']['remove']['particles_nb']);
+              removeParticles(settings['interactivity']['modes']['remove']['particles_nb']);
             break;
 
             case 'bubble':
@@ -964,9 +964,9 @@ class Particles {
       /* add or remove X particles */
       int missing_particles = settings['particles']['array'].length - nb_particles;
       if (missing_particles < 0) {
-        _pushParticles((missing_particles).abs());
+        pushParticles((missing_particles).abs());
       } else {
-        _removeParticles(missing_particles);
+        removeParticles(missing_particles);
       }
     }
   }
