@@ -239,7 +239,7 @@ class Particle {
     }
   }
 
-  void _drawPolygon(c, startX, startY, sideLength, sideCountNumerator, sideCountDenominator) {
+  void _drawPolygon(CanvasRenderingContext2D c, num startX, num startY, num sideLength, int sideCountNumerator, int sideCountDenominator) {
     int sideCount = sideCountNumerator * sideCountDenominator;
     double decimalSides = sideCountNumerator / sideCountDenominator;
     double interiorAngleDegrees = (180 * (decimalSides - 2)) / decimalSides;
@@ -257,7 +257,7 @@ class Particle {
     c.restore();
   }
 
-  drawShape(String shape, num radius, [stroke=false]) {
+  drawShape(String shape, num radius, [bool stroke=false]) {
     switch (shape) {
       case 'circle':
         _particles.ctx.arc(this.x, this.y, radius, 0, pi * 2, false);

@@ -534,7 +534,7 @@ class Particles {
   }
 
   /// Adds a specified amount of particles
-  void pushParticles(nb, [pos]) {
+  void pushParticles(int nb, [Map pos]) {
     settings['particles']['tmp']['pushing'] = true;
 
     for (int i = 0; i < nb; i++) {
@@ -559,7 +559,7 @@ class Particles {
   /* ---------- Particles functions - modes events ------------ */
 
   /// Removes a specified amount of particles
-  void removeParticles(nb) {
+  void removeParticles(int nb) {
     settings['particles']['array'].removeRange(0, nb);
     if (!settings['particles']['move']['enable']) {
       _particlesDraw();
@@ -917,7 +917,7 @@ class Particles {
           switch (settings['interactivity']['events']['onclick']['mode']) {
             case 'push':
               if (settings['particles']['move']['enable']) {
-                pushParticles(settings['interactivity']['modes']['push']['particles_nb'],settings['interactivity']['mouse']);
+                pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
               } else {
                 if (settings['interactivity']['modes']['push']['particles_nb'] == 1) {
                   pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
@@ -984,7 +984,7 @@ class Particles {
     window.open(canvas.toDataUrl('image/png'), '_blank');
   }
 
-  void _loadImg(type) {
+  void _loadImg(String type) {
     settings['tmp']['img_error'] = null;
 
     if (settings['particles']['shape']['image']['src'] != '') {
