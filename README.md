@@ -205,7 +205,7 @@ key | type | default | notes
 `interactivity > events > modes > grab > distance` | `num` | `100`
 `interactivity > events > modes > grab > line_linked > opacity` | `num` | `0.75` | 0 to 1
 `interactivity > events > modes > grab > outer_shape > enable` | `bool` | `false`
-`interactivity > events > modes > grab > outer_shape > type` | `String` | `"inherit"` | `"inherit"` will use `particles > line_linked` <br /> values <br /> Possible values: <br /> `"inherit"` <br /> `"circle"` <br /> `"edge"` <br /> `"square"` <br /> `"triangle"` <br /> `"polygon"` <br /> `"star"` <br /> `"character"` <br /> `"char"` <br /> `"image"`
+`interactivity > events > modes > grab > outer_shape > type` | `String` | `"inherit"` | `"inherit"` will use `particles > line_linked` <br /> values <br /> Possible values: <br /> `"inherit"` <br /> `"circle"` <br /> `"edge"` <br /> `"square"` <br /> `"triangle"` <br /> `"polygon"` <br /> `"star"` <br /> `"character"` <br /> `"char"`
 `interactivity > events > modes > grab > outer_shape > size` | `num` | `20` | Added to the particles' size
 `interactivity > events > modes > grab > outer_shape > stroke > width` | `String` <br /> `num` | `"inherit"` | `"inherit"` will use `particles > line_linked` values
 `interactivity > events > modes > grab > outer_shape > stroke > color` | `String` | `"inherit"` | `"inherit"` will use `particles > line_linked` values
