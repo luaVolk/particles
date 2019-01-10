@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Particles</title>
+  <meta content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wikiki/bulma-extensions/dist/css/bulma-extensions.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/main.css" />
+</head>
+<body>
+  
+  <div id="particles"></div>
+
+  <!-- Settings -->
+  <aside class="settings">
+    <!-- FPS and total particle counters -->
+    <div class="counters">
+      <div>
+        <b class="has-text-info">FPS</b>: <span id="fps"></span>
+      </div>
+      <div>
+        <b class="has-text-info">Particles</b>: <span id="total"></span>
+      </div>
+    </div>
+
+    <div class="is-divider"></div>
+
+    <div class="config">
+      <div class="ident">
+        <input class="is-checkradio is-small" id="retina_detect" type="checkbox" checked="checked">
+        <label class="label" for="retina_detect">Retina Detect</label>
+
+        <div class="label">Particles</div>
+
+        <div class="ident">
+          <div class="label">Number</div>
+
+          <div class="ident">
+            <div class="label is-small">Value</div>
+            <input class="slider is-fullwidth" type="range" id="particles-number-value" min="1" max="500" value="80">
+
+            <div class="label">Density</div>
+
+            <div class="ident field">
+              <input class="is-checkradio is-small" id="particles-number-density-enable" type="checkbox" checked="checked">
+              <label class="label" for="particles-number-density-enable">Enable</label>
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Value Area</div>
+              <input class="slider is-fullwidth" type="range" id="particles-number-density-value_area" value="800" min="1" max="4000">
+            </div>
+          </div>
+        </div>
+
+        <!-- Color -->
+
+        <div class="ident">
+          <div class="label">Color</div>
+          <div class="ident">
+            <div class="label is-small">Value</div>
+            <div class="multiple-inputs" id="particles-color-value">
+              <input class="input is-small" type="text" value="#209CEE">
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Shape -->
+
+        <div class="ident">
+          <div class="label">Shape</div>
+          <div class="ident">
+            <div class="label is-small">Type</div>
+            <div class="multiple-inputs" id="particles-shape-type">
+              <div class="select is-small">
+                <select>
+                  <option value="circle">Circle</option>
+                  <option value="triangle">Triangle</option>
+                  <option value="square">Square</option>
+                  <option value="polygon">Polygon</option>
+                  <option value="star">Star</option>
+                  <option value="image">Image</option>
+                  <option value="character">Character</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="label">Stroke</div>
+            <div class="ident field">
+              <div class="label is-small">Width</div>
+              <input class="slider is-fullwidth" type="range" id="particles-shape-stroke-width" value="0" min="0" max="20">
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Color</div>
+              <input class="input is-small" type="text" id="particles-shape-stroke-color" value="#FFF">
+            </div>
+          </div>
+
+          <div class="ident">
+            <div class="label">Polygon</div>
+            <div class="ident field">
+              <div class="label is-small">Nb. Sides</div>
+              <input class="slider is-fullwidth" type="range" id="particles-shape-polygon-nb_sides" value="5" min="0" max="20">
+            </div>
+          </div>
+
+          <div class="ident">
+            <div class="label">Image</div>
+            <div class="ident field">
+              <div class="label is-small">Source</div>
+              <input class="input is-small" type="text" id="particles-shape-image-src" value="dart.png">
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Width</div>
+              <input class="slider is-fullwidth" type="range" id="particles-shape-image-width" value="100" min="1" max="1000">
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Height</div>
+              <input class="slider is-fullwidth" type="range" id="particles-shape-image-height" value="100" min="1" max="1000">
+            </div>
+          </div>
+
+          <div class="ident">
+            <div class="label">Character</div>
+            <div class="ident field">
+              <div class="label is-small">Value</div>
+              <div class="multiple-inputs" id="particles-shape-character-value">
+                <input class="input is-small" type="text" value="Particles">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Opacity -->
+
+        <div class="ident">
+          <div class="label">Opacity</div>
+          <div class="ident">
+            <div class="label is-small">Value</div>
+            <input class="slider is-fullwidth" type="range" id="particles-opacity-value" value="0.8" min="0" max="1" step="0.01">
+
+            <div class="is-thin-divider"></div>
+
+            <input class="is-checkradio is-small" id="particles-opacity-random" type="checkbox">
+            <label class="label" for="particles-opacity-random">Random</label>
+
+            <div class="label">Animated</div>
+            <div class="ident field">
+
+              <input class="is-checkradio is-small" id="particles-opacity-anim-enable" type="checkbox">
+              <label class="label" for="particles-opacity-anim-enable">Enable</label>
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Speed</div>
+              <input class="slider is-fullwidth" type="range" id="particles-opacity-anim-speed" value="1" min="0" max="100">
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Min Opacity</div>
+              <input class="slider is-fullwidth" type="range" id="particles-opacity-anim-opacity_min" value="0.1" min="0" max="1" step="0.01">
+
+              <div class="is-thin-divider"></div>
+
+              <input class="is-checkradio is-small" id="particles-opacity-anim-sync" type="checkbox">
+              <label class="label" for="particles-opacity-anim-sync">Sync</label>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Size -->
+
+        <div class="ident">
+          <div class="label">Size</div>
+          <div class="ident">
+            <div class="label is-small">Value</div>
+            <input class="slider is-fullwidth" type="range" id="particles-size-value" min="1" max="500" value="12">
+
+            <div class="is-thin-divider"></div>
+
+            <input class="is-checkradio is-small" id="particles-size-random" type="checkbox" checked="checked">
+            <label class="label" for="particles-size-random">Random</label>
+
+            <div class="label">Animated</div>
+            <div class="ident field">
+
+              <input class="is-checkradio is-small" id="particles-size-anim-enable" type="checkbox">
+              <label class="label" for="particles-size-anim-enable">Enable</label>
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Speed</div>
+              <input class="slider is-fullwidth" type="range" id="particles-size-anim-speed" min="0" max="200" value="100">
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Min Size</div>
+              <input class="slider is-fullwidth" type="range" id="particles-size-anim-size_min" min="0" max="500">
+
+              <div class="is-thin-divider"></div>
+
+              <input class="is-checkradio is-small" id="particles-size-anim-sync" type="checkbox">
+              <label class="label" for="particles-size-anim-sync">Sync</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="ident">
+          <div class="label">Line Linked</div>
+          <div class="ident">
+            <input class="is-checkradio is-small" id="particles-line_linked-enable" type="checkbox" checked="checked">
+            <label class="label" for="particles-line_linked-enable">Enable</label>
+
+            <div class="is-thin-divider"></div>
+
+            <div class="label is-small">Distance</div>
+            <input class="slider is-fullwidth" type="range" id="particles-line_linked-distance" min="0" max="800" value="150">
+
+            <div class="is-thin-divider"></div>
+
+            <div class="label is-small">Color</div>
+            <input class="input is-small" type="text" id="particles-line_linked-color" value="#209cee" >
+
+            <div class="is-thin-divider"></div>
+
+            <div class="label is-small">Opacity</div>
+            <input class="slider is-fullwidth" type="range" id="particles-line_linked-opacity" min="0" max="1" step="0.01" value="0.4">
+
+            <div class="is-thin-divider"></div>
+
+            <div class="label is-small">Width</div>
+            <input class="slider is-fullwidth" type="range" id="particles-line_linked-width" min="0" max="20" value="1">
+          </div>
+        </div>
+
+        <div class="ident">
+          <div class="label">Move</div>
+          <div class="ident">
+            <input class="is-checkradio is-small" id="particles-move-enable" type="checkbox" checked="checked">
+            <label class="label" for="particles-move-enable">Enable</label>
+
+            <div class="is-thin-divider"></div>
+
+            <div class="label is-small">Speed</div>
+            <input class="slider is-fullwidth" type="range" id="particles-move-speed" min="0" max="100"  value="1">
+
+            <div class="is-thin-divider"></div>
+
+            <div class="label is-small">Direction</div>
+            <div class="select is-small">
+              <select id="particles-move-direction">
+                <option value="none">None</option> 
+                <option value="top">Top</option> 
+                <option value="top-right">Top-right</option> 
+                <option value="right">Right</option> 
+                <option value="bottom-right">Bottom-right</option> 
+                <option value="bottom">Bottom</option> 
+                <option value="bottom-left">Bottom-left</option> 
+                <option value="left">Left</option> 
+                <option value="top-left">Top-left</option>
+              </select>
+            </div>
+
+            <div class="is-thin-divider"></div>
+
+            <input class="is-checkradio is-small" id="particles-move-random" type="checkbox" checked="checked">
+            <label class="label" for="particles-move-random">Random</label>
+
+            <div class="is-thin-divider"></div>
+
+            <input class="is-checkradio is-small" id="particles-move-straight" type="checkbox">
+            <label class="label" for="particles-move-straight">Straight</label>
+
+            <div class="is-thin-divider"></div>
+
+            <div class="label is-small">Out Mode</div>
+            <div class="select is-small">
+              <select id="particles-move-out_mode">
+                <option value="out">Out</option> 
+                <option value="bounce">Bounce</option>
+              </select>
+            </div>
+
+            <div class="is-thin-divider"></div>
+
+            <input class="is-checkradio is-small" id="particles-move-parallax" type="checkbox">
+            <label class="label" for="particles-move-parallax">Parallax</label>
+
+            <div class="is-thin-divider"></div>
+
+            <input class="is-checkradio is-small" id="particles-move-bounce" type="checkbox">
+            <label class="label" for="particles-move-bounce">Bounce</label>
+
+            <div class="label">Attract</div>
+            <div class="ident field">
+              <input class="is-checkradio is-small" id="particles-move-attract-enable" type="checkbox">
+              <label class="label" for="particles-move-attract-enable">Enable</label>
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Rotate X</div>
+              <input class="slider is-fullwidth" type="range" id="particles-move-attract-rotateX" min="0" max="5000" value="600">
+
+              <div class="is-thin-divider"></div>
+
+              <div class="label is-small">Rotate Y</div>
+              <input class="slider is-fullwidth" type="range" id="particles-move-attract-rotateY" min="0" max="5000" value="1200">
+            </div>
+          </div>
+        </div>
+
+        <div class="ident">
+          <div class="label">Interactivity</div>
+          <div class="ident">
+            <div class="label is-small">Detect On</div>
+            <div class="select is-small">
+              <select id="interactivity-detect_on">
+                <option value="canvas">Canvas</option> 
+                <option value="window">Window</option>
+              </select>
+            </div>
+
+            <div class="label">Events</div>
+            <div class="ident">
+
+              <input class="is-checkradio is-small" id="interactivity-events-resize" type="checkbox" checked="checked">
+              <label class="label" for="interactivity-events-resize">Resize</label>
+
+              <div class="label">On hover</div>
+              <div class="ident">
+                <input class="is-checkradio is-small" id="interactivity-events-onhover-enable" type="checkbox" checked="checked">
+                <label class="label" for="interactivity-events-onhover-enable">Enable</label>
+
+                <div class="is-thin-divider"></div>
+
+                <div class="label is-small">Mode</div>
+                <div class="multiple-inputs" id="interactivity-events-onhover-mode">
+                  <div class="select is-small">
+                    <select>
+                      <option value="grab">Grab</option>
+                      <option value="bubble">Bubble</option> 
+                      <option value="repulse">Repulse</option> 
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="label">On click</div>
+              <div class="ident">
+                <input class="is-checkradio is-small" id="interactivity-events-onclick-enable" type="checkbox" checked="checked">
+                <label class="label" for="interactivity-events-onclick-enable">Enable</label>
+
+                <div class="is-thin-divider"></div>
+
+                <div class="label is-small">Mode</div>
+                <div class="multiple-inputs" id="interactivity-events-onclick-mode">
+                  <div class="select is-small">
+                    <select>
+                      <option value="push">Push</option>
+                      <option value="remove">Remove</option>
+                      <option value="bubble">Bubble</option> 
+                      <option value="repulse">Repulse</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="label">Modes</div>
+            <div class="ident">
+              <div class="label">Grab</div>
+              <div class="ident">
+                <div class="label is-small">Distance</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-grab-distance" min="0" max="2000" value="400">
+
+                <div class="label is-small">Line Linked</div>
+                <div class="ident">
+                  <div class="label is-small">Opacity</div>
+                  <input class="slider is-fullwidth" type="range" id="interactivity-modes-grab-line_linked-opacity" min="0" max="1" step="0.01" value="1">
+                </div>
+
+                <div class="label is-small">Outer Shape</div>
+                <div class="ident">
+                  <input class="is-checkradio is-small" id="interactivity-modes-grab-outer_shape-enable" type="checkbox">
+                  <label class="label" for="interactivity-modes-grab-outer_shape-enable">Enable</label>
+
+                  <div class="is-thin-divider"></div>
+
+                  <div class="label is-small">Type</div>
+                  <div class="select is-small">
+                    <select id="interactivity-modes-grab-outer_shape-type">
+                      <option value="inherit">Inherit</option>
+                      <option value="circle">Circle</option>
+                      <option value="triangle">Triangle</option>
+                      <option value="square">Square</option>
+                      <option value="polygon">Polygon</option>
+                      <option value="star">Star</option>
+                      <option value="character">Character</option>
+                    </select>
+                  </div>
+
+                  <div class="is-thin-divider"></div>
+
+                  <div class="label is-small">Size</div>
+                  <input class="slider is-fullwidth" type="range" id="interactivity-modes-grab-outer_shape-size" min="0" max="100" value="5">
+
+                  <div class="is-thin-divider"></div>
+
+                  <div class="label">Stroke</div>
+                  <div class="ident field">
+                    <div class="label is-small">Width</div>
+                    <input class="slider is-fullwidth" type="range" id="interactivity-modes-grab-outer_shape-stroke-width" min="0" max="20" value="1">
+
+                    <div class="is-thin-divider"></div>
+
+                    <div class="label is-small">Color</div>
+                    <input class="input is-small" type="text" id="interactivity-modes-grab-outer_shape-stroke-color" value="inherit">
+                  </div>
+                </div>
+              </div>
+
+              <div class="label">Bubble</div>
+              <div class="ident">
+                <div class="label is-small">Distance</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-bubble-distance" min="0" max="2000" value="400">
+
+                <div class="is-thin-divider"></div>
+
+                <div class="label is-small">Size</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-bubble-size" min="0" max="1000" value="40">
+
+                <div class="is-thin-divider"></div>
+
+                <div class="label is-small">Duration</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-bubble-duration" min="0" max="100" step="0.01" value="2">
+
+                <div class="is-thin-divider"></div>
+
+                <div class="label is-small">Opacity</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-bubble-opacity" min="0" max="1" step="0.01" value="1">
+
+                <div class="is-thin-divider"></div>
+
+                <div class="label is-small">Speed</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-bubble-speed" min="0" max="100" value="3">
+              </div>
+
+              <div class="label">Repulse</div>
+              <div class="ident">
+                <div class="label is-small">Distance</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-repulse-distance" min="0" max="2000" value="400">
+
+                <div class="is-thin-divider"></div>
+
+                <div class="label is-small">Strength</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-repulse-strength" min="0" max="200" value="10">
+
+                <div class="is-thin-divider"></div>
+
+                <div class="label is-small">Duration</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-repulse-duration" min="0" max="10" step="0.01" value="0.4">
+              </div>
+
+              <div class="label">Push</div>
+              <div class="ident">
+                <div class="label is-small">Nb. Particles</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-push-particles_nb" min="0" max="100" value="5">
+              </div>
+
+              <div class="label">Remove</div>
+              <div class="ident">
+                <div class="label is-small">Nb. Particles</div>
+                <input class="slider is-fullwidth" type="range" id="interactivity-modes-remove-particles_nb" min="0" max="100" value="5">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  
+  <script src="https://cdn.jsdelivr.net/gh/Wikiki/bulma-extensions/dist/js/bulma-extensions.min.js"></script>
+  <script src="scripts/main.dart.js"></script>
+</body>
+</html>
