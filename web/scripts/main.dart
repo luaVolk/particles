@@ -11,11 +11,20 @@ main() {
 
   settingsRefresh();
 
-  querySelectorAll('input, select').onChange.listen((e) {
+  ElementList<Element> inputs = querySelectorAll('input, select');
+
+  inputs.onChange.listen((e) {
     settingsRefresh();
+    if (e.target is SelectElement) {
+      SelectElement el = (e.target as SelectElement);
+      el.attributes['value'] = el.value;
+    } else {
+      InputElement el = (e.target as InputElement);
+      el.attributes['value'] = el.value;
+    }
   });
 
-  querySelectorAll('input, select').onKeyUp.listen((e) {
+  inputs.onKeyUp.listen((e) {
     settingsRefresh();
   });
 

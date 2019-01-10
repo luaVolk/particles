@@ -10,7 +10,12 @@ body {
 }
 
 input[type=range].slider {
-  margin: 0
+  margin: 0;
+  &:after {
+    content: attr(value);
+    vertical-align: sub;
+    margin-left: 10px;
+  }
 }
 
 #particles {
