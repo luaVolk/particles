@@ -176,18 +176,6 @@ class Particles {
       settings = deepExtend(settings, config);
     }
 
-    settings['tmp']['obj'] = {
-      'size_value': settings['particles']['size']['value'],
-      'size_anim_speed': settings['particles']['size']['anim']['speed'],
-      'move_speed': settings['particles']['move']['speed'],
-      'line_linked_distance': settings['particles']['line_linked']['distance'],
-      'line_linked_width': settings['particles']['line_linked']['width'],
-      'mode_grab_distance': settings['interactivity']['modes']['grab']['distance'],
-      'mode_bubble_distance': settings['interactivity']['modes']['bubble']['distance'],
-      'mode_bubble_size': settings['interactivity']['modes']['bubble']['size'],
-      'mode_repulse_distance': settings['interactivity']['modes']['repulse']['distance']
-    };
-
       _eventsListeners();
 
       _start();
@@ -1090,6 +1078,18 @@ class Particles {
   void _init() {
     /* init canvas + particles */
     settings['particles']['line_linked']['color_rgb_line'] = hexToRgb(settings['particles']['line_linked']['color']);
+
+    settings['tmp']['obj'] = {
+      'size_value': settings['particles']['size']['value'],
+      'size_anim_speed': settings['particles']['size']['anim']['speed'],
+      'move_speed': settings['particles']['move']['speed'],
+      'line_linked_distance': settings['particles']['line_linked']['distance'],
+      'line_linked_width': settings['particles']['line_linked']['width'],
+      'mode_grab_distance': settings['interactivity']['modes']['grab']['distance'],
+      'mode_bubble_distance': settings['interactivity']['modes']['bubble']['distance'],
+      'mode_bubble_size': settings['interactivity']['modes']['bubble']['size'],
+      'mode_repulse_distance': settings['interactivity']['modes']['repulse']['distance']
+    };
 
     _retinaInit();
     _canvasSize();
