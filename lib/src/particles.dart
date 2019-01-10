@@ -908,38 +908,36 @@ class Particles {
         settings['interactivity']['mouse']['click_time'] = DateTime.now().millisecondsSinceEpoch;
 
         if (settings['interactivity']['events']['onclick']['enable']) {
-          switch (settings['interactivity']['events']['onclick']['mode']) {
-            case 'push':
-              if (settings['particles']['move']['enable']) {
+          if (settings['interactivity']['events']['onclick']['mode'].contains('push')) {
+            if (settings['particles']['move']['enable']) {
+              pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
+            } else {
+              if (settings['interactivity']['modes']['push']['particles_nb'] == 1) {
                 pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
-              } else {
-                if (settings['interactivity']['modes']['push']['particles_nb'] == 1) {
-                  pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
-                } else if (settings['interactivity']['modes']['push']['particles_nb'] > 1) {
-                  pushParticles(settings['interactivity']['modes']['push']['particles_nb']);
-                }
+              } else if (settings['interactivity']['modes']['push']['particles_nb'] > 1) {
+                pushParticles(settings['interactivity']['modes']['push']['particles_nb']);
               }
-            break;
+            }
+          }
 
-            case 'remove':
-              removeParticles(settings['interactivity']['modes']['remove']['particles_nb']);
-            break;
+          if (settings['interactivity']['events']['onclick']['mode'].contains('remove')) {
+            removeParticles(settings['interactivity']['modes']['remove']['particles_nb']);
+          }
 
-            case 'bubble':
-              settings['tmp']['bubble_clicking'] = true;
-            break;
+          if (settings['interactivity']['events']['onclick']['mode'].contains('bubble')) {
+            settings['tmp']['bubble_clicking'] = true;
+          }
 
-            case 'repulse':
-              settings['tmp']['repulse_clicking'] = true;
-              settings['tmp']['repulse_count'] = 0;
-              settings['tmp']['repulse_finish'] = false;
-              new Timer(
-                new Duration(milliseconds: (settings['interactivity']['modes']['repulse']['duration'] * 1000).round()),
-                () {
-                  settings['tmp']['repulse_clicking'] = false;
-                }
-              );
-            break;
+          if (settings['interactivity']['events']['onclick']['mode'].contains('repulse')) {
+            settings['tmp']['repulse_clicking'] = true;
+            settings['tmp']['repulse_count'] = 0;
+            settings['tmp']['repulse_finish'] = false;
+            new Timer(
+              new Duration(milliseconds: (settings['interactivity']['modes']['repulse']['duration'] * 1000).round()),
+              () {
+                settings['tmp']['repulse_clicking'] = false;
+              }
+            );
           }
         }
       });
