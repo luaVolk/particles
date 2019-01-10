@@ -449,8 +449,11 @@ class Particles {
     settings['particles']['array'] = [];
   }
 
-  /// Refreshes the particles' canvas. Can be used if you changed the configuration
-  void particlesRefresh() {
+  /**
+   * Refreshes the particles' canvas. Can be used if you changed the configuration.
+   * If reloadConfig is true it will reload the config Map
+   */
+  void particlesRefresh([bool reloadConfig]) {
     /* init all */
     cancelRequestAnimFrame(settings['tmp']['checkAnimFrame']);
     cancelRequestAnimFrame(_drawAnimFrame);
@@ -459,6 +462,10 @@ class Particles {
     settings['tmp']['count_svg'] = 0;
     _particlesEmpty();
     _canvasClear();
+
+    if (reloadConfig) {
+      settings = deepExtend(settings, config);
+    }
 
     /* restart */
    _start();
