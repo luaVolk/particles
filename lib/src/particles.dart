@@ -176,11 +176,11 @@ class Particles {
       settings = deepExtend(settings, config);
     }
 
-      _eventsListeners();
+    _eventsListeners();
 
-      _start();
+    _start();
 
-      return this;
+    return this;
   }
 
   void _retinaInit() {
@@ -753,8 +753,7 @@ class Particles {
         p.y = pos['y'];
       }
     } else if (settings['interactivity']['events']['onclick']['enable'] &&
-        settings['interactivity']['events']['onclick']['mode']
-            .contains('repulse')) {
+        settings['interactivity']['events']['onclick']['mode'].contains('repulse')) {
       if (!settings['tmp']['repulse_finish'] != null &&
           settings['tmp']['repulse_finish']) {
         settings['tmp']['repulse_count']++;
@@ -764,8 +763,7 @@ class Particles {
       }
 
       if (settings['tmp']['repulse_clicking']) {
-        num repulseRadius = pow(
-            settings['interactivity']['modes']['repulse']['distance'] / 6, 3);
+        num repulseRadius = pow(settings['interactivity']['modes']['repulse']['distance'] / 6, 3);
 
         num dx = settings['interactivity']['mouse']['click_pos_x'] - p.x,
             dy = settings['interactivity']['mouse']['click_pos_y'] - p.y,
