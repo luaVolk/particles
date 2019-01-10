@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:math';
 
 Map<String, dynamic> deepExtend(Map<String, dynamic> destination, Map<String, dynamic> source) {
