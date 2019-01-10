@@ -24,9 +24,6 @@ Map<String, dynamic> deepExtend(Map<String, dynamic> destination, Map<String, dy
   return newMap;
 }
 
-Function requestAnimFrame = window.requestAnimationFrame;
-Function cancelRequestAnimFrame = window.cancelAnimationFrame;
-
 Map<String, int> hexToRgb(String hex) {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   RegExp shorthandRegex = new RegExp(r'^#?([a-f\d])([a-f\d])([a-f\d])$', caseSensitive: false);

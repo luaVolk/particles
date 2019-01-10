@@ -455,8 +455,8 @@ class Particles {
    */
   void particlesRefresh([bool reloadConfig]) {
     /* init all */
-    cancelRequestAnimFrame(settings['tmp']['checkAnimFrame']);
-    cancelRequestAnimFrame(_drawAnimFrame);
+    window.cancelAnimationFrame(settings['tmp']['checkAnimFrame']);
+    window.cancelAnimationFrame(_drawAnimFrame);
     settings['tmp']['source_svg'] = null;
     settings['tmp']['img_obj'] = null;
     settings['tmp']['count_svg'] = 0;
@@ -969,7 +969,7 @@ class Particles {
 
   /// Stops drawing the particles and removes the [canvas]
   void destroyParticles() {
-    cancelRequestAnimFrame(_drawAnimFrame);
+    window.cancelAnimationFrame(_drawAnimFrame);
     canvas.remove();
   }
 
@@ -1026,35 +1026,35 @@ class Particles {
             settings['particles']['number']['value']) {
           _particlesDraw();
           if (!settings['particles']['move']['enable']) {
-            cancelRequestAnimFrame(_drawAnimFrame);
+            window.cancelAnimationFrame(_drawAnimFrame);
           } else {
-            _drawAnimFrame = requestAnimFrame(_draw);
+            _drawAnimFrame = window.requestAnimationFrame(_draw);
           }
         } else {
           if (!settings['tmp']['img_error']) {
-            _drawAnimFrame = requestAnimFrame(_draw);
+            _drawAnimFrame = window.requestAnimationFrame(_draw);
           }
         }
       } else {
         if (settings['tmp']['img_obj'] != null) {
           _particlesDraw();
           if (!settings['particles']['move']['enable']) {
-            cancelRequestAnimFrame(_drawAnimFrame);
+            window.cancelAnimationFrame(_drawAnimFrame);
           } else {
-            _drawAnimFrame = requestAnimFrame(_draw);
+            _drawAnimFrame = window.requestAnimationFrame(_draw);
           }
         } else {
           if (!settings['tmp']['img_error']) {
-            _drawAnimFrame = requestAnimFrame(_draw);
+            _drawAnimFrame = window.requestAnimationFrame(_draw);
           }
         }
       }
     } else {
       _particlesDraw();
       if (!settings['particles']['move']['enable']) {
-        cancelRequestAnimFrame(_drawAnimFrame);
+        window.cancelAnimationFrame(_drawAnimFrame);
       } else {
-        _drawAnimFrame = requestAnimFrame(_draw);
+        _drawAnimFrame = window.requestAnimationFrame(_draw);
       }
     }
 
@@ -1066,9 +1066,9 @@ class Particles {
     if (settings['particles']['shape']['type'] == 'image') {
       if (settings['tmp']['img_type'] == 'svg' &&
           settings['tmp']['source_svg'] == null) {
-        settings['tmp']['checkAnimFrame'] = requestAnimFrame(settings['tmp']['checkAnimFrame']);
+        settings['tmp']['checkAnimFrame'] = window.requestAnimationFrame(settings['tmp']['checkAnimFrame']);
       } else {
-        cancelRequestAnimFrame(settings['tmp']['checkAnimFrame']);
+        window.cancelAnimationFrame(settings['tmp']['checkAnimFrame']);
         if (!settings['tmp']['img_error']) {
           _init();
           _draw();
