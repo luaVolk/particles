@@ -1,4 +1,4 @@
-# Particles
+# Particles [![Pub](https://img.shields.io/pub/v/particles.svg)](https://pub.dartlang.org/packages/particles)
 
 Port of [Vincent Garreau' particles.js](https://github.com/VincentGarreau/particles.js) written in Dart with added features.
 
