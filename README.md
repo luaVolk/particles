@@ -88,7 +88,6 @@ Map<String, dynamic> settings = {
       'random': false,
       'straight': false,
       'out_mode': 'out',
-      'parallax': true,
       'bounce': false,
       'parallax': false,
       'attract': {
