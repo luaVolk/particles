@@ -37,7 +37,7 @@ Map<String, dynamic> settings = {
       'type': 'circle',
       'stroke': {
         'width': 0,
-        'color': '#ff0000'
+        'color': '#FFFFFF'
       },
       'polygon': {
         'nb_sides': 5
