@@ -2843,7 +2843,7 @@ a.moveTo(0,0)
 for(w=0;w<z;++w){a.lineTo(d,0)
 a.translate(d,0)
 a.rotate(x)}a.restore()},
-b9:function(a,b,c){var z,y,x,w,v,u
+b9:function(a,b,c){var z,y,x,w,v,u,t,s,r,q,p
 switch(a){case"circle":z=this.a.c
 y=this.x
 x=this.y
@@ -2862,19 +2862,42 @@ case"star":z=this.a
 y=b*2
 this.an(z.c,this.x-y/(J.a(J.a(J.a(z.x.h(0,"particles"),"shape"),"polygon"),"nb_sides")/4),this.y-b/1.52,y*2.66/(J.a(J.a(J.a(z.x.h(0,"particles"),"shape"),"polygon"),"nb_sides")/3),J.a(J.a(J.a(z.x.h(0,"particles"),"shape"),"polygon"),"nb_sides"),2)
 break
+case"heart":z=b/2
+w=this.x-z
+v=this.y-z
+y=this.a
+x=b/4
+u=v+x
+y.c.moveTo(w,u)
+x=w+x
+y.c.quadraticCurveTo(w,v,x,v)
+t=w+z
+y.c.quadraticCurveTo(t,v,t,u)
+s=b*3/4
+r=w+s
+y.c.quadraticCurveTo(t,v,r,v)
+q=w+b
+y.c.quadraticCurveTo(q,v,q,u)
+z=v+z
+s=v+s
+y.c.quadraticCurveTo(q,z,r,s)
+y.c.lineTo(t,v+b)
+y.c.lineTo(x,s)
+y.c.quadraticCurveTo(w,z,w,u)
+break
 case"char":case"character":z=this.a
 z.c.font=H.b(J.a(J.a(J.a(z.x.h(0,"particles"),"shape"),"character"),"style"))+" "+H.b(J.a(J.a(J.a(z.x.h(0,"particles"),"shape"),"character"),"weight"))+" "+J.bF(b)*2+"px "+H.b(J.a(J.a(J.a(z.x.h(0,"particles"),"shape"),"character"),"font"))
 y=this.cy
 x=this.x
-w=this.y
-v=b/2
-if(c)z.c.strokeText(y,x-v,w+v)
+u=this.y
+t=b/2
+if(c)z.c.strokeText(y,x-t,u+t)
 else{z=z.c
 z.toString
-z.fillText(y,x-v,w+v)}break
+z.fillText(y,x-t,u+t)}break
 case"image":z=this.a
-u=J.l(J.a(z.x.h(0,"tmp"),"img_type"),"svg")?this.cx.h(0,"obj"):J.a(z.x.h(0,"tmp"),"img_obj")
-if(u!=null)new U.e5(this,b).$1(u)
+p=J.l(J.a(z.x.h(0,"tmp"),"img_type"),"svg")?this.cx.h(0,"obj"):J.a(z.x.h(0,"tmp"),"img_obj")
+if(p!=null)new U.e5(this,b).$1(p)
 break}},
 cf:function(a,b){return this.b9(a,b,!1)},
 bN:function(){var z,y,x,w
