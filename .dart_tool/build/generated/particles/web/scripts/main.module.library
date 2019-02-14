@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["particles|lib/particles.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html","async"]}

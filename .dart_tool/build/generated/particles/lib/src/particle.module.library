@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["particles|lib/src/util.dart","particles|lib/src/particles.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html","math"]}
