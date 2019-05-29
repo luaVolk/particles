@@ -217,7 +217,7 @@ class Particles {
 
     /* Particles elements */
     Element tag = document.getElementById(id);
-    String canvasClass = 'particles-canvas-';
+    String canvasClass = 'particles-canvas';
     List<Node> existCanvas = tag.getElementsByClassName(canvasClass);
 
     /* remove canvas if exists into the Particles target tag */
