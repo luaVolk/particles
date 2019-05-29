@@ -217,7 +217,7 @@ class Particles {
 
     /* Particles elements */
     Element tag = document.getElementById(id);
-    String canvasClass = 'particles-js-canvas-el';
+    String canvasClass = 'particles-canvas-';
     List<Node> existCanvas = tag.getElementsByClassName(canvasClass);
 
     /* remove canvas if exists into the Particles target tag */
@@ -238,7 +238,7 @@ class Particles {
     /* append canvas */
     canvas = tag.append(canvasEl);
 
-    canvas = querySelector('#$id > .particles-js-canvas-el');
+    canvas = querySelector('#$id > .particles-canvas');
 
     ctx = canvas.context2D;
   }
