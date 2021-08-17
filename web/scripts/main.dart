@@ -2,7 +2,7 @@ import 'dart:html';
 import 'dart:async';
 import 'package:particles/particles.dart';
 
-Particles particles;
+late Particles particles;
 
 main() {
   particles = new Particles().start();
@@ -17,10 +17,10 @@ main() {
     settingsRefresh();
     if (e.target is SelectElement) {
       SelectElement el = (e.target as SelectElement);
-      el.attributes['value'] = el.value;
+      el.attributes['value'] = el.value!;
     } else {
       InputElement el = (e.target as InputElement);
-      el.attributes['value'] = el.value;
+      el.attributes['value'] = el.value!;
     }
   });
 
@@ -31,8 +31,8 @@ main() {
 }
 
 countersInit() {
-  Element counter = document.getElementById('fps');
-  Element total = document.getElementById('total');
+  Element? counter = document.getElementById('fps');
+  Element? total = document.getElementById('total');
 
   int fps = 0;
 
@@ -41,8 +41,8 @@ countersInit() {
   };
 
   new Timer.periodic(const Duration(seconds: 1), (_) {
-    counter.text = fps.toString();
-    total.text = particles.settings['particles']['array'].length.toString();
+    counter!.text = fps.toString();
+    total!.text = particles.settings['particles']['array'].length.toString();
 
     if (fps < 30) {
       counter.classes.add('has-text-danger');
@@ -54,14 +54,14 @@ countersInit() {
   });
 }
 
-Element $id(String id) => document.getElementById(id);
+Element? $id(String id) => document.getElementById(id);
 
 getInput(String id) {
-  Element el = $id(id);
+  Element? el = $id(id);
   if (el is SelectElement) {
     return el;
   } else {
-    return el as InputElement;
+    return el as InputElement?;
   }
 }
 
@@ -76,10 +76,10 @@ settingsRefresh() {
         }
       },
       "color": {
-        "value": multipleInputs($id('particles-color-value'))
+        "value": multipleInputs($id('particles-color-value')!)
       },
       "shape": {
-        "type": multipleInputs($id('particles-shape-type')),
+        "type": multipleInputs($id('particles-shape-type')!),
         "stroke": {
           "width":  int.parse(getInput('particles-shape-stroke-width').value),
           "color": getInput('particles-shape-stroke-color').value
@@ -93,7 +93,7 @@ settingsRefresh() {
           "height":  int.parse(getInput('particles-shape-image-height').value)
         },
         "character": {
-          "value": multipleInputs($id('particles-shape-character-value'))
+          "value": multipleInputs($id('particles-shape-character-value')!)
         }
       },
       "opacity": {
@@ -144,11 +144,11 @@ settingsRefresh() {
       "events": {
         "onhover": {
           "enable": getInput('interactivity-events-onhover-enable').checked,
-          "mode": multipleInputs($id('interactivity-events-onhover-mode'))
+          "mode": multipleInputs($id('interactivity-events-onhover-mode')!)
         },
         "onclick": {
           "enable": getInput('interactivity-events-onclick-enable').checked,
-          "mode": multipleInputs($id('interactivity-events-onclick-mode'))
+          "mode": multipleInputs($id('interactivity-events-onclick-mode')!)
         },
         "resize": getInput('interactivity-events-resize').checked
       },

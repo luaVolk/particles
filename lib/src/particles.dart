@@ -9,18 +9,18 @@ class Particles {
   String id;
 
   /// The canvas where the particles will be drawn
-  CanvasElement canvas;
+  CanvasElement? canvas;
 
   /// The context of the [canvas] where the particles will be drawn
-  CanvasRenderingContext2D ctx;
+  late CanvasRenderingContext2D ctx;
 
   /// The width of the [canvas] where the particles will be drawn
-  int canvasWidth;
+  int? canvasWidth;
 
   /// The height of the [canvas] where the particles will be drawn
-  int canvasHeight;
+  int? canvasHeight;
 
-  num _pxratio;
+  late num _pxratio;
 
   Random _rng = new Random();
 
@@ -29,54 +29,30 @@ class Particles {
     'particles': {
       'number': {
         'value': 100,
-        'density': {
-          'enable': true,
-          'value_area': 800
-        }
+        'density': {'enable': true, 'value_area': 800}
       },
-      'color': {
-        'value': '#fff'
-      },
+      'color': {'value': '#fff'},
       'shape': {
         'type': 'circle',
-        'stroke': {
-          'width': 0,
-          'color': '#ff0000'
-        },
-        'polygon': {
-          'nb_sides': 5
-        },
+        'stroke': {'width': 0, 'color': '#ff0000'},
+        'polygon': {'nb_sides': 5},
         'character': {
           'value': 'P',
           'font': 'arial',
           'style': 'normal',
           'weight': 'normal',
         },
-        'image': {
-          'src': 'particle.png',
-          'width': 100,
-          'height': 100
-        }
+        'image': {'src': 'particle.png', 'width': 100, 'height': 100}
       },
       'opacity': {
         'value': 1,
         'random': false,
-        'anim': {
-          'enable': false,
-          'speed': 2,
-          'opacity_min': 0,
-          'sync': false
-        }
+        'anim': {'enable': false, 'speed': 2, 'opacity_min': 0, 'sync': false}
       },
       'size': {
         'value': 10,
         'random': false,
-        'anim': {
-          'enable': false,
-          'speed': 20,
-          'size_min': 0,
-          'sync': false
-        }
+        'anim': {'enable': false, 'speed': 20, 'size_min': 0, 'sync': false}
       },
       'line_linked': {
         'enable': true,
@@ -94,11 +70,7 @@ class Particles {
         'out_mode': 'out',
         'bounce': false,
         'parallax': false,
-        'attract': {
-          'enable': false,
-          'rotateX': 3000,
-          'rotateY': 3000
-        }
+        'attract': {'enable': false, 'rotateX': 3000, 'rotateY': 3000}
       },
       'array': [],
       'tmp': {}
@@ -106,74 +78,54 @@ class Particles {
     'interactivity': {
       'detect_on': 'canvas',
       'events': {
-        'onhover': {
-          'enable': true,
-          'mode': 'grab'
-        },
-        'onclick': {
-          'enable': true,
-          'mode': 'push'
-        },
+        'onhover': {'enable': true, 'mode': 'grab'},
+        'onclick': {'enable': true, 'mode': 'push'},
         'resize': true
       },
       'modes': {
-        'grab':{
+        'grab': {
           'distance': 100,
-          'line_linked':{
-            'opacity': 1
-          },
+          'line_linked': {'opacity': 1},
           'outer_shape': {
             'enable': false,
             'type': 'inherit',
             'size': 20,
-            'stroke': {
-              'width': 'inherit',
-              'color': 'inherit'
-            },
+            'stroke': {'width': 'inherit', 'color': 'inherit'},
           }
         },
-        'bubble':{
+        'bubble': {
           'distance': 100,
           'size': 40,
           'duration': 0.4,
           'opacity': 8,
           'speed': 3
         },
-        'repulse':{
-          'distance': 200,
-          'strength': 100,
-          'duration': 0.4
-        },
-        'push':{
-          'particles_nb': 4
-        },
-        'remove':{
-          'particles_nb': 2
-        }
+        'repulse': {'distance': 200, 'strength': 100, 'duration': 0.4},
+        'push': {'particles_nb': 4},
+        'remove': {'particles_nb': 2}
       },
-      'mouse':{}
+      'mouse': {}
     },
     'retina_detect': false,
-    'fn': {
-      'interact': {},
-      'modes': {},
-      'vendors':{}
-    },
+    'fn': {'interact': {}, 'modes': {}, 'vendors': {}},
     'tmp': {}
   };
 
   /// The user provided parameters Map
-  Map<String, dynamic> config;
+  Map<String, dynamic>? config;
 
   /// The class constructor. It won't start drawing particles until [start()] is executed.
-  Particles({String this.id: 'particles', Map<String, dynamic> this.config});
+  Particles({
+    String this.id: 'particles',
+    Map<String, dynamic>? this.config,
+  });
 
   /// Starts drawing particles
   Particles start() {
     _createCanvas();
 
     if (config != null) {
-      settings = deepExtend(settings, config);
+      settings = deepExtend(settings, config!);
     }
 
     _eventsListeners();
@@ -192,31 +144,37 @@ class Particles {
       settings['tmp']['retina'] = false;
     }
 
-    canvasWidth = canvas.offsetWidth * _pxratio;
-    canvasHeight = canvas.offsetHeight * _pxratio;
+    canvasWidth = canvas!.offsetWidth * (_pxratio as int);
+    canvasHeight = canvas!.offsetHeight * (_pxratio as int);
 
-    settings['particles']['size']['value'] = settings['tmp']['obj']['size_value'] * _pxratio;
-    settings['particles']['size']['anim']['speed'] = settings['tmp']['obj']['size_anim_speed'] * _pxratio;
-    settings['particles']['move']['speed'] = settings['tmp']['obj']['move_speed'] * _pxratio;
-    settings['particles']['line_linked']['distance'] = settings['tmp']['obj']['line_linked_distance'] * _pxratio;
-    settings['interactivity']['modes']['grab']['distance'] = settings['tmp']['obj']['mode_grab_distance'] * _pxratio;
-    settings['interactivity']['modes']['bubble']['distance'] = settings['tmp']['obj']['mode_bubble_distance'] * _pxratio;
-    settings['particles']['line_linked']['width'] = settings['tmp']['obj']['line_linked_width'] * _pxratio;
-    settings['interactivity']['modes']['bubble']['size'] = settings['tmp']['obj']['mode_bubble_size'] * _pxratio;
-    settings['interactivity']['modes']['repulse']['distance'] = settings['tmp']['obj']['mode_repulse_distance'] * _pxratio;
-
+    settings['particles']['size']['value'] =
+        settings['tmp']['obj']['size_value'] * _pxratio;
+    settings['particles']['size']['anim']['speed'] =
+        settings['tmp']['obj']['size_anim_speed'] * _pxratio;
+    settings['particles']['move']['speed'] =
+        settings['tmp']['obj']['move_speed'] * _pxratio;
+    settings['particles']['line_linked']['distance'] =
+        settings['tmp']['obj']['line_linked_distance'] * _pxratio;
+    settings['interactivity']['modes']['grab']['distance'] =
+        settings['tmp']['obj']['mode_grab_distance'] * _pxratio;
+    settings['interactivity']['modes']['bubble']['distance'] =
+        settings['tmp']['obj']['mode_bubble_distance'] * _pxratio;
+    settings['particles']['line_linked']['width'] =
+        settings['tmp']['obj']['line_linked_width'] * _pxratio;
+    settings['interactivity']['modes']['bubble']['size'] =
+        settings['tmp']['obj']['mode_bubble_size'] * _pxratio;
+    settings['interactivity']['modes']['repulse']['distance'] =
+        settings['tmp']['obj']['mode_repulse_distance'] * _pxratio;
   }
 
   /* ---------- Particles functions - canvas ------------ */
 
   void _createCanvas() {
     /* no id? set the id to default id */
-    if (id == null) {
-      id = 'particles';
-    }
+    id = 'particles';
 
     /* Particles elements */
-    Element tag = document.getElementById(id);
+    Element tag = document.getElementById(id)!;
     String canvasClass = 'particles-canvas';
     List<Node> existCanvas = tag.getElementsByClassName(canvasClass);
 
@@ -228,7 +186,7 @@ class Particles {
     }
 
     /* create canvas element */
-    CanvasElement canvasEl = document.createElement('canvas');
+    CanvasElement canvasEl = document.createElement('canvas') as CanvasElement;
     canvasEl.className = canvasClass;
 
     /* set size canvas */
@@ -236,38 +194,39 @@ class Particles {
     canvasEl.style.height = "100%";
 
     /* append canvas */
-    canvas = tag.append(canvasEl);
+    canvas = tag.append(canvasEl) as CanvasElement?;
 
-    canvas = querySelector('#$id > .particles-canvas');
+    canvas = querySelector('#$id > .particles-canvas') as CanvasElement?;
 
-    ctx = canvas.context2D;
+    ctx = canvas!.context2D;
   }
 
   void _canvasSize() {
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
+    canvas!.width = canvasWidth;
+    canvas!.height = canvasHeight;
 
-    if (settings != null && settings['interactivity']['events']['resize']) {
+    if (settings['interactivity']['events']['resize']) {
       window.addEventListener('resize', (_) {
-          canvasWidth = canvas.offsetWidth;
-          canvasHeight = canvas.offsetHeight;
+        canvasWidth = canvas!.offsetWidth;
+        canvasHeight = canvas!.offsetHeight;
 
-          /* resize canvas */
-        if (settings['tmp'].containsKey('retina') && settings['tmp']['retina']) {
-            canvasWidth *= _pxratio;
-            canvasHeight *= _pxratio;
-          }
+        /* resize canvas */
+        if (settings['tmp'].containsKey('retina') &&
+            settings['tmp']['retina']) {
+          canvasWidth! * _pxratio as int;
+          canvasHeight! * _pxratio as int;
+        }
 
-          canvas.width = canvasWidth;
-          canvas.height = canvasHeight;
+        canvas!.width = canvasWidth;
+        canvas!.height = canvasHeight;
 
-          /* repaint canvas on anim disabled */
+        /* repaint canvas on anim disabled */
         if (!settings['particles']['move']['enable']) {
-            _particlesEmpty();
-            _particlesCreate();
-            _particlesDraw();
-            _densityAutoParticles();
-          }
+          _particlesEmpty();
+          _particlesCreate();
+          _particlesDraw();
+          _densityAutoParticles();
+        }
 
         /* density particles enabled */
         _densityAutoParticles();
@@ -276,11 +235,11 @@ class Particles {
   }
 
   void _canvasPaint() {
-    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    ctx.fillRect(0, 0, canvasWidth!, canvasHeight!);
   }
 
   void _canvasClear() {
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    ctx.clearRect(0, 0, canvasWidth!, canvasHeight!);
   }
 
   /* --------- Particles functions - particles ----------- */
@@ -288,12 +247,12 @@ class Particles {
   void _particlesCreate() {
     for (int i = 0; i < settings['particles']['number']['value']; i++) {
       settings['particles']['array'].add(new Particle(
-        settings['particles']['color'],
-        settings['particles']['opacity']['value'],
-        this
-      ));
+          settings['particles']['color'],
+          settings['particles']['opacity']['value'],
+          this));
     }
-    settings['particles']['array'].sort((a, b) => a.radius.compareTo(b.radius) as int);
+    settings['particles']['array']
+        .sort((a, b) => a.radius.compareTo(b.radius) as int?);
   }
 
   void _particlesUpdate() {
@@ -304,46 +263,47 @@ class Particles {
       /* move the particle */
       if (settings['particles']['move']['enable']) {
         double ms = settings['particles']['move']['speed'] / 2;
-        p.x += p.vx * ms;
-        p.y += p.vy * ms;
+        p.x! + p.vx! * ms;
+        p.y! + p.vy! * ms;
       }
 
       /* change opacity status */
       if (settings['particles']['opacity']['anim']['enable']) {
         if (p.opacityStatus == true) {
-          if (p.opacity >= settings['particles']['opacity']['value']) {
+          if (p.opacity! >= settings['particles']['opacity']['value']) {
             p.opacityStatus = false;
           }
-          p.opacity += p.vo;
+          p.opacity! + p.vo!;
         } else {
-          if (p.opacity <= settings['particles']['opacity']['anim']['opacity_min']) {
+          if (p.opacity! <=
+              settings['particles']['opacity']['anim']['opacity_min']) {
             p.opacityStatus = true;
           }
-          p.opacity -= p.vo;
+          p.opacity! - p.vo!;
         }
 
-        if (p.opacity < 0) p.opacity = 0;
+        if (p.opacity! < 0) p.opacity = 0;
       }
 
       /* change size */
       if (settings['particles']['size']['anim']['enable']) {
         if (p.sizeStatus == true) {
-          if (p.radius >= settings['particles']['size']['value']) {
+          if (p.radius! >= settings['particles']['size']['value']) {
             p.sizeStatus = false;
           }
-          p.radius += p.vs;
+          p.radius! + p.vs!;
         } else {
-          if (p.radius <= settings['particles']['size']['anim']['size_min']) {
+          if (p.radius! <= settings['particles']['size']['anim']['size_min']) {
             p.sizeStatus = true;
           }
-          p.radius -= p.vs;
+          p.radius! - p.vs!;
         }
 
-        if (p.radius < 0) p.radius = 0;
+        if (p.radius! < 0) p.radius = 0;
       }
 
       /* change particle position if it is out of canvas */
-      Map<String, num> new_pos;
+      Map<String, num?> new_pos;
       if (settings['particles']['move']['out_mode'] == 'bounce') {
         new_pos = {
           'x_left': p.radius,
@@ -353,56 +313,61 @@ class Particles {
         };
       } else {
         new_pos = {
-          'x_left': -p.radius,
-          'x_right': canvasWidth + p.radius,
-          'y_top': -p.radius,
-          'y_bottom': canvasHeight + p.radius
+          'x_left': -p.radius!,
+          'x_right': canvasWidth! + p.radius!,
+          'y_top': -p.radius!,
+          'y_bottom': canvasHeight! + p.radius!
         };
       }
 
-      if (p.x - p.radius > canvasWidth) {
+      if (p.x! - p.radius! > canvasWidth!) {
         p.x = new_pos['x_left'];
-        p.y = _rng.nextDouble() * canvasHeight;
-      } else if (p.x + p.radius < 0) {
+        p.y = _rng.nextDouble() * canvasHeight!;
+      } else if (p.x! + p.radius! < 0) {
         p.x = new_pos['x_right'];
-        p.y = _rng.nextDouble() * canvasHeight;
+        p.y = _rng.nextDouble() * canvasHeight!;
       }
-      if (p.y - p.radius > canvasHeight) {
+      if (p.y! - p.radius! > canvasHeight!) {
         p.y = new_pos['y_top'];
-        p.x = _rng.nextDouble() * canvasWidth;
-      } else if (p.y + p.radius < 0) {
+        p.x = _rng.nextDouble() * canvasWidth!;
+      } else if (p.y! + p.radius! < 0) {
         p.y = new_pos['y_bottom'];
-        p.x = _rng.nextDouble() * canvasWidth;
+        p.x = _rng.nextDouble() * canvasWidth!;
       }
 
       /* out of canvas modes */
       switch (settings['particles']['move']['out_mode']) {
         case 'bounce':
-          if (p.x + p.radius > canvasWidth) {
-            p.vx = -p.vx;
-          } else if (p.x - p.radius < 0) {
-            p.vx = -p.vx;
+          if (p.x! + p.radius! > canvasWidth!) {
+            p.vx = -p.vx!;
+          } else if (p.x! - p.radius! < 0) {
+            p.vx = -p.vx!;
           }
-          if (p.y + p.radius > canvasHeight) {
-            p.vy = -p.vy;
-          } else if (p.y - p.radius < 0) {
-           p.vy = -p.vy;
+          if (p.y! + p.radius! > canvasHeight!) {
+            p.vy = -p.vy!;
+          } else if (p.y! - p.radius! < 0) {
+            p.vy = -p.vy!;
           }
-        break;
+          break;
       }
 
       /* events */
-      if (settings['interactivity']['events']['onhover']['mode'].contains('grab')) {
+      if (settings['interactivity']['events']['onhover']['mode']
+          .contains('grab')) {
         _grabParticle(p);
       }
 
-      if (settings['interactivity']['events']['onhover']['mode'].contains('bubble') ||
-          settings['interactivity']['events']['onclick']['mode'].contains('bubble')) {
+      if (settings['interactivity']['events']['onhover']['mode']
+              .contains('bubble') ||
+          settings['interactivity']['events']['onclick']['mode']
+              .contains('bubble')) {
         _bubbleParticle(p);
       }
 
-      if (settings['interactivity']['events']['onhover']['mode'].contains('repulse') ||
-          settings['interactivity']['events']['onclick']['mode'].contains('repulse')) {
+      if (settings['interactivity']['events']['onhover']['mode']
+              .contains('repulse') ||
+          settings['interactivity']['events']['onclick']['mode']
+              .contains('repulse')) {
         _repulseParticle(p);
       }
 
@@ -410,21 +375,21 @@ class Particles {
       if (settings['particles']['line_linked']['enable'] ||
           settings['particles']['move']['attract']['enable']) {
         for (int j = i + 1; j < settings['particles']['array'].length; j++) {
-          Particle p2 = settings['particles']['array'][j];
+          Particle? p2 = settings['particles']['array'][j];
 
           /* link particles */
           if (settings['particles']['line_linked']['enable']) {
-            _linkParticles(p, p2);
+            _linkParticles(p, p2!);
           }
 
           /* attract particles */
           if (settings['particles']['move']['attract']['enable']) {
-            _attractParticles(p, p2);
+            _attractParticles(p, p2!);
           }
 
           /* bounce particles */
           if (settings['particles']['move']['bounce']) {
-            _bounceParticles(p, p2);
+            _bounceParticles(p, p2!);
           }
         }
       }
@@ -433,7 +398,7 @@ class Particles {
 
   void _particlesDraw() {
     /* clear canvas */
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    ctx.clearRect(0, 0, canvasWidth!, canvasHeight!);
 
     /* update each particles param */
     _particlesUpdate();
@@ -453,7 +418,7 @@ class Particles {
    * Refreshes the particles' canvas. Can be used if you changed the configuration.
    * If reloadConfig is true it will reload the config Map
    */
-  void particlesRefresh([bool reloadConfig]) {
+  void particlesRefresh([bool? reloadConfig]) {
     /* init all */
     window.cancelAnimationFrame(settings['tmp']['checkAnimFrame']);
     window.cancelAnimationFrame(_drawAnimFrame);
@@ -463,16 +428,16 @@ class Particles {
     _particlesEmpty();
     _canvasClear();
 
-    if (reloadConfig) {
-      settings = deepExtend(settings, config);
+    if (reloadConfig!) {
+      settings = deepExtend(settings, config!);
     }
 
     /* restart */
-   _start();
+    _start();
   }
 
   void _linkParticles(Particle p1, Particle p2) {
-    num dx = p1.x - p2.x, dy = p1.y - p2.y;
+    num dx = p1.x! - p2.x!, dy = p1.y! - p2.y!;
     double dist = sqrt(dx * dx + dy * dy);
 
     /* draw a line between p1 and p2 if the distance between them is under the config distance */
@@ -483,14 +448,16 @@ class Particles {
 
       if (opacity_line > 0) {
         /* style */
-        Map<String, int> color_line = settings['particles']['line_linked']['color_rgb_line'];
-        ctx.strokeStyle = 'rgba(${color_line['r']},${color_line['g']},${color_line['b']},$opacity_line)';
+        Map<String, int> color_line =
+            settings['particles']['line_linked']['color_rgb_line'];
+        ctx.strokeStyle =
+            'rgba(${color_line['r']},${color_line['g']},${color_line['b']},$opacity_line)';
         ctx.lineWidth = settings['particles']['line_linked']['width'];
 
         /* path */
         ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
+        ctx.moveTo(p1.x!, p1.y!);
+        ctx.lineTo(p2.x!, p2.y!);
         ctx.stroke();
         ctx.closePath();
       }
@@ -499,49 +466,51 @@ class Particles {
 
   void _attractParticles(Particle p1, Particle p2) {
     /* condensed particles */
-    num dx = p1.x - p2.x, dy = p1.y - p2.y;
+    num dx = p1.x! - p2.x!, dy = p1.y! - p2.y!;
 
     double dist = sqrt(dx * dx + dy * dy);
 
     if (dist <= settings['particles']['line_linked']['distance']) {
-      double ax = dx / (settings['particles']['move']['attract']['rotateX'] * 1000),
-          ay = dy / (settings['particles']['move']['attract']['rotateY'] * 1000);
+      double ax =
+              dx / (settings['particles']['move']['attract']['rotateX'] * 1000),
+          ay =
+              dy / (settings['particles']['move']['attract']['rotateY'] * 1000);
 
-      p1.vx -= ax;
-      p1.vy -= ay;
-
-      p2.vx += ax;
-      p2.vy += ay;
+      p1.vx! - ax;
+      p1.vy! - ay;
+      p2.vx! + ax;
+      p2.vy! + ay;
     }
   }
 
   void _bounceParticles(Particle p1, Particle p2) {
-    num dx = p1.x - p2.x, dy = p1.y - p2.y, dist_p = p1.radius + p2.radius;
+    num dx = p1.x! - p2.x!,
+        dy = p1.y! - p2.y!,
+        dist_p = p1.radius! + p2.radius!;
 
     double dist = sqrt(dx * dx + dy * dy);
 
     if (dist <= dist_p) {
-      p1.vx = -p1.vx;
-      p1.vy = -p1.vy;
+      p1.vx = -p1.vx!;
+      p1.vy = -p1.vy!;
 
-      p2.vx = -p2.vx;
-      p2.vy = -p2.vy;
+      p2.vx = -p2.vx!;
+      p2.vy = -p2.vy!;
     }
   }
 
   /// Adds a specified amount of particles
-  void pushParticles(int nb, [Map pos]) {
+  void pushParticles(int nb, [Map? pos]) {
     settings['particles']['tmp']['pushing'] = true;
 
     for (int i = 0; i < nb; i++) {
       settings['particles']['array'].add(new Particle(
-        settings['particles']['color'],
-        settings['particles']['opacity']['value'],
-        this, {
-          'x': pos != null ? pos['pos_x'] : _rng.nextDouble() * canvasWidth,
-          'y': pos != null ? pos['pos_y'] : _rng.nextDouble() * canvasHeight
-        }
-      ));
+          settings['particles']['color'],
+          settings['particles']['opacity']['value'],
+          this, {
+        'x': pos != null ? pos['pos_x'] : _rng.nextDouble() * canvasWidth!,
+        'y': pos != null ? pos['pos_y'] : _rng.nextDouble() * canvasHeight!
+      }));
       if (i == nb - 1) {
         if (!settings['particles']['move']['enable']) {
           _particlesDraw();
@@ -549,13 +518,14 @@ class Particles {
         settings['particles']['tmp']['pushing'] = false;
       }
     }
-    settings['particles']['array'].sort((a, b) => a.radius.compareTo(b.radius) as int);
+    settings['particles']['array']
+        .sort((a, b) => a.radius.compareTo(b.radius) as int?);
   }
 
   /* ---------- Particles functions - modes events ------------ */
 
   /// Removes a specified amount of particles
-  void removeParticles(int nb) {
+  void removeParticles(int? nb) {
     settings['particles']['array'].removeRange(0, nb);
     if (!settings['particles']['move']['enable']) {
       _particlesDraw();
@@ -563,14 +533,15 @@ class Particles {
   }
 
   void _bubbleParticle(Particle p) {
-    double dist_mouse, time_spent, value;
+    double? dist_mouse, time_spent, value;
 
     /* on hover event */
     if (settings['interactivity']['events']['onhover']['enable'] &&
-        settings['interactivity']['events']['onhover']['mode'] .contains('bubble') &&
+        settings['interactivity']['events']['onhover']['mode']
+            .contains('bubble') &&
         settings['interactivity']['status'] == 'mousemove') {
-      num dx_mouse = p.x - settings['interactivity']['mouse']['pos_x'],
-          dy_mouse = p.y - settings['interactivity']['mouse']['pos_y'];
+      num dx_mouse = p.x! - settings['interactivity']['mouse']['pos_x'],
+          dy_mouse = p.y! - settings['interactivity']['mouse']['pos_y'];
       dist_mouse = sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse);
 
       double ratio = 1 -
@@ -582,18 +553,24 @@ class Particles {
       }
 
       /* mousemove - check ratio */
-      if (dist_mouse <= settings['interactivity']['modes']['bubble']['distance']) {
+      if (dist_mouse <=
+          settings['interactivity']['modes']['bubble']['distance']) {
         if (ratio >= 0 && settings['interactivity']['status'] == 'mousemove') {
           /* size */
-          if (settings['interactivity']['modes']['bubble']['size'] != settings['particles']['size']['value']) {
-            if (settings['interactivity']['modes']['bubble']['size'] > settings['particles']['size']['value']) {
-              var size = p.radius + (settings['interactivity']['modes']['bubble']['size'] * ratio);
+          if (settings['interactivity']['modes']['bubble']['size'] !=
+              settings['particles']['size']['value']) {
+            if (settings['interactivity']['modes']['bubble']['size'] >
+                settings['particles']['size']['value']) {
+              var size = p.radius! +
+                  (settings['interactivity']['modes']['bubble']['size'] *
+                      ratio);
               if (size >= 0) {
                 p.radius_bubble = size;
               }
             } else {
-              var dif = p.radius - settings['interactivity']['modes']['bubble']['size'],
-                  size = p.radius - (dif * ratio);
+              num dif = p.radius! -
+                      settings['interactivity']['modes']['bubble']['size'],
+                  size = p.radius! - (dif * ratio);
               if (size > 0) {
                 p.radius_bubble = size;
               } else {
@@ -603,17 +580,27 @@ class Particles {
           }
 
           /* opacity */
-          if (settings['interactivity']['modes']['bubble']['opacity'] != settings['particles']['opacity']['value']) {
-            if (settings['interactivity']['modes']['bubble']['opacity'] > settings['particles']['opacity']['value']) {
-              double opacity = settings['interactivity']['modes']['bubble'] ['opacity'] * ratio;
-              if (opacity > p.opacity &&
-                  opacity <= settings['interactivity']['modes']['bubble']['opacity']) {
+          if (settings['interactivity']['modes']['bubble']['opacity'] !=
+              settings['particles']['opacity']['value']) {
+            if (settings['interactivity']['modes']['bubble']['opacity'] >
+                settings['particles']['opacity']['value']) {
+              double opacity = settings['interactivity']['modes']['bubble']
+                      ['opacity'] *
+                  ratio;
+              if (opacity > p.opacity! &&
+                  opacity <=
+                      settings['interactivity']['modes']['bubble']['opacity']) {
                 p.opacity_bubble = opacity;
               }
             } else {
-              double opacity = p.opacity - (settings['particles']['opacity']['value'] - settings['interactivity']['modes']['bubble']['opacity']) * ratio;
-              if (opacity < p.opacity &&
-                  opacity >= settings['interactivity']['modes']['bubble']['opacity']) {
+              double opacity = p.opacity! -
+                  (settings['particles']['opacity']['value'] -
+                          settings['interactivity']['modes']['bubble']
+                              ['opacity']) *
+                      ratio as double;
+              if (opacity < p.opacity! &&
+                  opacity >=
+                      settings['interactivity']['modes']['bubble']['opacity']) {
                 p.opacity_bubble = opacity;
               }
             }
@@ -631,44 +618,53 @@ class Particles {
 
     /* on click event */
     else if (settings['interactivity']['events']['onclick']['enable'] &&
-        settings['interactivity']['events']['onclick']['mode'].contains('bubble')) {
+        settings['interactivity']['events']['onclick']['mode']
+            .contains('bubble')) {
       if (settings['tmp']['bubble_clicking']) {
-      var dx_mouse = p.x - settings['interactivity']['mouse']['click_pos_x'],
-          dy_mouse = p.y - settings['interactivity']['mouse']['click_pos_y'];
+        var dx_mouse = p.x! - settings['interactivity']['mouse']['click_pos_x'],
+            dy_mouse = p.y! - settings['interactivity']['mouse']['click_pos_y'];
         dist_mouse = sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse);
-        time_spent = (DateTime.now().millisecondsSinceEpoch - settings['interactivity']['mouse']['click_time']) / 1000;
+        time_spent = (DateTime.now().millisecondsSinceEpoch -
+                settings['interactivity']['mouse']['click_time']) /
+            1000;
 
-        if (time_spent > settings['interactivity']['modes']['bubble']['duration']) {
+        if (time_spent >
+            settings['interactivity']['modes']['bubble']['duration']) {
           settings['tmp']['bubble_duration_end'] = true;
         }
 
-        if (time_spent > settings['interactivity']['modes']['bubble']['duration'] * 2) {
+        if (time_spent >
+            settings['interactivity']['modes']['bubble']['duration'] * 2) {
           settings['tmp']['bubble_clicking'] = false;
           settings['tmp']['bubble_duration_end'] = false;
         }
       }
 
       void process(
-        num bubble_param,
-        num particles_param,
-        num p_obj_bubble,
-        num p_obj,
-        String id,
-        double dist_mouse,
-        double time_spent,
-        double value
-      ) {
+          num? bubble_param,
+          num? particles_param,
+          num? p_obj_bubble,
+          num? p_obj,
+          String id,
+          double? dist_mouse,
+          double? time_spent,
+          double? value) {
         if (bubble_param != particles_param) {
           if (!settings['tmp']['bubble_duration_end']) {
-            if (dist_mouse <= settings['interactivity']['modes']['bubble']['distance']) {
-              num obj;
+            if (dist_mouse! <=
+                settings['interactivity']['modes']['bubble']['distance']) {
+              num? obj;
               if (p_obj_bubble != null) {
                 obj = p_obj_bubble;
               } else {
                 obj = p_obj;
               }
               if (obj != bubble_param) {
-                double value = p_obj - (time_spent * (p_obj - bubble_param) / settings['interactivity']['modes']['bubble'] ['duration']);
+                double value = p_obj! -
+                    (time_spent! *
+                        (p_obj - bubble_param!) /
+                        settings['interactivity']['modes']['bubble']
+                            ['duration']);
                 if (id == 'size') p.radius_bubble = value;
                 if (id == 'opacity') p.opacity_bubble = value;
               }
@@ -678,51 +674,54 @@ class Particles {
             }
           } else {
             if (p_obj_bubble != null) {
-              double value_tmp = p_obj - (time_spent * (p_obj - bubble_param) / settings['interactivity']['modes']['bubble'] ['duration']),
+              double value_tmp = p_obj! -
+                      (time_spent! *
+                          (p_obj - bubble_param!) /
+                          settings['interactivity']['modes']['bubble']
+                              ['duration']),
                   dif = bubble_param - value_tmp;
-                  value = bubble_param + dif;
+              value = bubble_param + dif;
               if (id == 'size') p.radius_bubble = value;
               if (id == 'opacity') p.opacity_bubble = value;
             }
-            }
           }
         }
+      }
 
       ;
 
       if (settings['tmp']['bubble_clicking']) {
         /* size */
         process(
-          settings['interactivity']['modes']['bubble']['size'],
-          settings['particles']['size']['value'],
-          p.radius_bubble,
-          p.radius,
-          'size',
-          dist_mouse,
-          time_spent,
-          value
-        );
+            settings['interactivity']['modes']['bubble']['size'],
+            settings['particles']['size']['value'],
+            p.radius_bubble,
+            p.radius,
+            'size',
+            dist_mouse,
+            time_spent,
+            value);
         /* opacity */
         process(
-          settings['interactivity']['modes']['bubble']['opacity'],
-          settings['particles']['opacity']['value'],
-          p.opacity_bubble,
-          p.opacity,
-          'opacity',
-          dist_mouse,
-          time_spent,
-          value
-        );
+            settings['interactivity']['modes']['bubble']['opacity'],
+            settings['particles']['opacity']['value'],
+            p.opacity_bubble,
+            p.opacity,
+            'opacity',
+            dist_mouse,
+            time_spent,
+            value);
       }
     }
   }
 
   void _repulseParticle(Particle p) {
     if (settings['interactivity']['events']['onhover']['enable'] &&
-        settings['interactivity']['events']['onhover']['mode'].contains('repulse') &&
+        settings['interactivity']['events']['onhover']['mode']
+            .contains('repulse') &&
         settings['interactivity']['status'] == 'mousemove') {
-      num dx_mouse = p.x - settings['interactivity']['mouse']['pos_x'],
-          dy_mouse = p.y - settings['interactivity']['mouse']['pos_y'];
+      num dx_mouse = p.x! - settings['interactivity']['mouse']['pos_x'],
+          dy_mouse = p.y! - settings['interactivity']['mouse']['pos_y'];
       double dist_mouse = sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse);
 
       Map<String, double> normVec = {
@@ -730,44 +729,50 @@ class Particles {
         'y': dy_mouse / dist_mouse
       };
 
-      var repulseRadius = settings['interactivity']['modes']['repulse']['distance'],
+      dynamic repulseRadius =
+              settings['interactivity']['modes']['repulse']['distance'],
           velocity = settings['interactivity']['modes']['repulse']['strength'],
           repulseFactor = clamp(
-            (1 / repulseRadius) * (-1 * pow(dist_mouse / repulseRadius, 2) + 1) * repulseRadius * velocity,
-            0,
-            50
-          );
+              (1 / repulseRadius) *
+                  (-1 * pow(dist_mouse / repulseRadius, 2) + 1) *
+                  repulseRadius *
+                  velocity,
+              0,
+              50);
 
       Map<String, double> pos = {
-        'x': p.x + normVec['x'] * repulseFactor,
-        'y': p.y + normVec['y'] * repulseFactor
+        'x': p.x! + normVec['x']! * repulseFactor,
+        'y': p.y! + normVec['y']! * repulseFactor
       };
 
       if (settings['particles']['move']['out_mode'] == 'bounce') {
-        if (pos['x'] - p.radius > 0 && pos['x'] + p.radius < canvasWidth)
+        if (pos['x']! - p.radius! > 0 && pos['x']! + p.radius! < canvasWidth!)
           p.x = pos['x'];
-        if (pos['y'] - p.radius > 0 && pos['y'] + p.radius < canvasHeight)
+        if (pos['y']! - p.radius! > 0 && pos['y']! + p.radius! < canvasHeight!)
           p.y = pos['y'];
       } else {
         p.x = pos['x'];
         p.y = pos['y'];
       }
     } else if (settings['interactivity']['events']['onclick']['enable'] &&
-        settings['interactivity']['events']['onclick']['mode'].contains('repulse')) {
-      if (!settings['tmp']['repulse_finish'] != null &&
+        settings['interactivity']['events']['onclick']['mode']
+            .contains('repulse')) {
+      if (settings['tmp']['repulse_finish'] != null &&
           settings['tmp']['repulse_finish']) {
         settings['tmp']['repulse_count']++;
-        if (settings['tmp']['repulse_count'] == settings['particles']['array'].length) {
+        if (settings['tmp']['repulse_count'] ==
+            settings['particles']['array'].length) {
           settings['tmp']['repulse_finish'] = true;
         }
       }
 
       if (settings['tmp']['repulse_clicking']) {
-        num repulseRadius = pow(settings['interactivity']['modes']['repulse']['distance'] / 6, 3);
+        num repulseRadius = pow(
+            settings['interactivity']['modes']['repulse']['distance'] / 6, 3);
 
-        num dx = settings['interactivity']['mouse']['click_pos_x'] - p.x,
+        num? dx = settings['interactivity']['mouse']['click_pos_x'] - p.x,
             dy = settings['interactivity']['mouse']['click_pos_y'] - p.y,
-            d = dx * dx + dy * dy;
+            d = dx! * dx + dy! * dy;
 
         double force = -repulseRadius / d * 1;
 
@@ -777,15 +782,17 @@ class Particles {
           p.vy = force * sin(f);
 
           if (settings['particles']['move']['out_mode'] == 'bounce') {
-            Map<String, double> pos = {'x': p.x + p.vx, 'y': p.y + p.vy};
-            if (pos['x'] + p.radius > canvasWidth) {
-              p.vx = -p.vx;
-            }
-            else if (pos['x'] - p.radius < 0) p.vx = -p.vx;
-            if (pos['y'] + p.radius > canvasHeight) {
-              p.vy = -p.vy;
-            } else if (pos['y'] - p.radius < 0) {
-              p.vy = -p.vy;
+            Map<String, double> pos = {
+              'x': p.x! + (p.vx as double),
+              'y': p.y! + (p.vy as double)
+            };
+            if (pos['x']! + p.radius! > canvasWidth!) {
+              p.vx = -p.vx!;
+            } else if (pos['x']! - p.radius! < 0) p.vx = -p.vx!;
+            if (pos['y']! + p.radius! > canvasHeight!) {
+              p.vy = -p.vy!;
+            } else if (pos['y']! - p.radius! < 0) {
+              p.vy = -p.vy!;
             }
           }
         }
@@ -793,7 +800,6 @@ class Particles {
         if (d <= repulseRadius) {
           process();
         }
-
       } else {
         if (settings['tmp']['repulse_clicking'] == false) {
           p.vx = p.vxI;
@@ -805,50 +811,76 @@ class Particles {
 
   void _grabParticle(Particle p) {
     if (settings['interactivity']['events']['onhover']['enable'] &&
-        settings['interactivity']['events']['onhover']['mode'].contains('grab') &&
+        settings['interactivity']['events']['onhover']['mode']
+            .contains('grab') &&
         settings['interactivity']['status'] == 'mousemove') {
-      num dx_mouse = p.x - settings['interactivity']['mouse']['pos_x'],
-          dy_mouse = p.y - settings['interactivity']['mouse']['pos_y'],
+      num dx_mouse = p.x! - settings['interactivity']['mouse']['pos_x'],
+          dy_mouse = p.y! - settings['interactivity']['mouse']['pos_y'],
           dist_mouse = sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse);
 
       /* draw a line between the cursor and the particle if the distance between them is under the config distance */
-      if (dist_mouse <= settings['interactivity']['modes']['grab']['distance']) {
-        double opacity_line = settings['interactivity']['modes']['grab']['line_linked']['opacity'] -
-            (dist_mouse / (1 / settings['interactivity']['modes']['grab'] ['line_linked']['opacity'])) / settings['interactivity']['modes']['grab']['distance'];
+      if (dist_mouse <=
+          settings['interactivity']['modes']['grab']['distance']) {
+        double opacity_line = settings['interactivity']['modes']['grab']
+                ['line_linked']['opacity'] -
+            (dist_mouse /
+                    (1 /
+                        settings['interactivity']['modes']['grab']
+                            ['line_linked']['opacity'])) /
+                settings['interactivity']['modes']['grab']['distance'];
 
         if (opacity_line > 0) {
           /* style */
-          Map<String, int> color_line = settings['particles']['line_linked']['color_rgb_line'];
-          ctx.strokeStyle = 'rgba(${color_line['r']},${color_line['g']},${color_line['b']},$opacity_line)';
+          Map<String, int> color_line =
+              settings['particles']['line_linked']['color_rgb_line'];
+          ctx.strokeStyle =
+              'rgba(${color_line['r']},${color_line['g']},${color_line['b']},$opacity_line)';
           ctx.lineWidth = settings['particles']['line_linked']['width'];
 
           /* path */
           ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(settings['interactivity']['mouse']['pos_x'], settings['interactivity']['mouse']['pos_y']);
+          ctx.moveTo(p.x!, p.y!);
+          ctx.lineTo(settings['interactivity']['mouse']['pos_x'],
+              settings['interactivity']['mouse']['pos_y']);
           ctx.stroke();
           ctx.closePath();
 
-          if (settings['interactivity']['modes']['grab']['outer_shape']['enable']) {
+          if (settings['interactivity']['modes']['grab']['outer_shape']
+              ['enable']) {
             ctx.beginPath();
 
-            String shape;
-            if (settings['interactivity']['modes']['grab']['outer_shape']['type'] != 'inherit') {
-              shape = settings['interactivity']['modes']['grab']['outer_shape']['type'];
+            String? shape;
+            if (settings['interactivity']['modes']['grab']['outer_shape']
+                    ['type'] !=
+                'inherit') {
+              shape = settings['interactivity']['modes']['grab']['outer_shape']
+                  ['type'];
             } else {
               shape = p.shape;
             }
 
-            if (settings['interactivity']['modes']['grab']['outer_shape']['stroke']['color'] != 'inherit') {
-              Map<String, int> color = hexToRgb(settings['interactivity']['modes']['grab']['outer_shape']['stroke']['color']);
-              ctx.strokeStyle = 'rgba(${color['r']},${color['g']},${color['b']},$opacity_line)';
+            if (settings['interactivity']['modes']['grab']['outer_shape']
+                    ['stroke']['color'] !=
+                'inherit') {
+              Map<String, int> color = hexToRgb(settings['interactivity']
+                  ['modes']['grab']['outer_shape']['stroke']['color'])!;
+              ctx.strokeStyle =
+                  'rgba(${color['r']},${color['g']},${color['b']},$opacity_line)';
             }
 
-            if (settings['interactivity']['modes']['grab']['outer_shape']['stroke']['width'] != 'inherit') {
-              ctx.lineWidth = settings['interactivity']['modes']['grab']['outer_shape']['stroke']['width'];
+            if (settings['interactivity']['modes']['grab']['outer_shape']
+                    ['stroke']['width'] !=
+                'inherit') {
+              ctx.lineWidth = settings['interactivity']['modes']['grab']
+                  ['outer_shape']['stroke']['width'];
             }
 
-            p.drawShape(shape, settings['interactivity']['modes']['grab']['outer_shape']['size'] + p.radius, true);
+            p.drawShape(
+                shape,
+                settings['interactivity']['modes']['grab']['outer_shape']
+                        ['size'] +
+                    p.radius,
+                true);
 
             ctx.stroke();
             ctx.closePath();
@@ -871,14 +903,14 @@ class Particles {
         settings['interactivity']['events']['onclick']['enable']) {
       /* el on mousemove */
       settings['interactivity']['el'].onMouseMove.listen((MouseEvent e) {
-        int pos_x = e.client.x, pos_y = e.client.y;
+        int pos_x = e.client.x as int, pos_y = e.client.y as int;
 
         if (settings['interactivity']['detect_on'] == 'window') {
-          pos_x = e.client.x;
-          pos_y = e.client.y;
+          pos_x = e.client.x as int;
+          pos_y = e.client.y as int;
         } else {
-          pos_x = e.offset.x ?? e.client.x;
-          pos_y = e.offset.y ?? e.client.y;
+          pos_x = e.offset.x as int? ?? e.client.x as int;
+          pos_y = e.offset.y as int? ?? e.client.y as int;
         }
 
         settings['interactivity']['mouse']['pos_x'] = pos_x;
@@ -903,41 +935,59 @@ class Particles {
     /* on click event */
     if (settings['interactivity']['events']['onclick']['enable']) {
       settings['interactivity']['el'].addEventListener('click', (e) {
-        settings['interactivity']['mouse']['click_pos_x'] = settings['interactivity']['mouse']['pos_x'];
-        settings['interactivity']['mouse']['click_pos_y'] = settings['interactivity']['mouse']['pos_y'];
-        settings['interactivity']['mouse']['click_time'] = DateTime.now().millisecondsSinceEpoch;
+        settings['interactivity']['mouse']['click_pos_x'] =
+            settings['interactivity']['mouse']['pos_x'];
+        settings['interactivity']['mouse']['click_pos_y'] =
+            settings['interactivity']['mouse']['pos_y'];
+        settings['interactivity']['mouse']['click_time'] =
+            DateTime.now().millisecondsSinceEpoch;
 
         if (settings['interactivity']['events']['onclick']['enable']) {
-          if (settings['interactivity']['events']['onclick']['mode'].contains('push')) {
+          if (settings['interactivity']['events']['onclick']['mode']
+              .contains('push')) {
             if (settings['particles']['move']['enable']) {
-              pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
+              pushParticles(
+                  settings['interactivity']['modes']['push']['particles_nb'],
+                  settings['interactivity']['mouse']);
             } else {
-              if (settings['interactivity']['modes']['push']['particles_nb'] == 1) {
-                pushParticles(settings['interactivity']['modes']['push']['particles_nb'], settings['interactivity']['mouse']);
-              } else if (settings['interactivity']['modes']['push']['particles_nb'] > 1) {
-                pushParticles(settings['interactivity']['modes']['push']['particles_nb']);
+              if (settings['interactivity']['modes']['push']['particles_nb'] ==
+                  1) {
+                pushParticles(
+                    settings['interactivity']['modes']['push']['particles_nb'],
+                    settings['interactivity']['mouse']);
+              } else if (settings['interactivity']['modes']['push']
+                      ['particles_nb'] >
+                  1) {
+                pushParticles(
+                    settings['interactivity']['modes']['push']['particles_nb']);
               }
             }
           }
 
-          if (settings['interactivity']['events']['onclick']['mode'].contains('remove')) {
-            removeParticles(settings['interactivity']['modes']['remove']['particles_nb']);
+          if (settings['interactivity']['events']['onclick']['mode']
+              .contains('remove')) {
+            removeParticles(
+                settings['interactivity']['modes']['remove']['particles_nb']);
           }
 
-          if (settings['interactivity']['events']['onclick']['mode'].contains('bubble')) {
+          if (settings['interactivity']['events']['onclick']['mode']
+              .contains('bubble')) {
             settings['tmp']['bubble_clicking'] = true;
           }
 
-          if (settings['interactivity']['events']['onclick']['mode'].contains('repulse')) {
+          if (settings['interactivity']['events']['onclick']['mode']
+              .contains('repulse')) {
             settings['tmp']['repulse_clicking'] = true;
             settings['tmp']['repulse_count'] = 0;
             settings['tmp']['repulse_finish'] = false;
             new Timer(
-              new Duration(milliseconds: (settings['interactivity']['modes']['repulse']['duration'] * 1000).round()),
-              () {
-                settings['tmp']['repulse_clicking'] = false;
-              }
-            );
+                new Duration(
+                    milliseconds: (settings['interactivity']['modes']['repulse']
+                                ['duration'] *
+                            1000)
+                        .round()), () {
+              settings['tmp']['repulse_clicking'] = false;
+            });
           }
         }
       });
@@ -947,16 +997,20 @@ class Particles {
   void _densityAutoParticles() {
     if (settings['particles']['number']['density']['enable']) {
       /* calc area */
-      double area = canvas.width * canvas.height / 1000;
+      double area = canvas!.width! * canvas!.height! / 1000;
       if (settings['tmp']['retina']) {
         area = area / (_pxratio * 2);
       }
 
       /* calc number of particles based on density area */
-      int nb_particles = (area * settings['particles']['number']['value'] / settings['particles']['number']['density']['value_area']).floor();
+      int nb_particles = (area *
+              settings['particles']['number']['value'] /
+              settings['particles']['number']['density']['value_area'])
+          .floor();
 
       /* add or remove X particles */
-      int missing_particles = settings['particles']['array'].length - nb_particles;
+      int missing_particles =
+          settings['particles']['array'].length - nb_particles;
       if (missing_particles < 0) {
         pushParticles((missing_particles).abs());
       } else {
@@ -968,15 +1022,15 @@ class Particles {
   /// Stops drawing the particles and removes the [canvas]
   void destroyParticles() {
     window.cancelAnimationFrame(_drawAnimFrame);
-    canvas.remove();
+    canvas!.remove();
   }
 
   /// Opens the current image displaying in the [canvas] in a new tab
   void exportImg() {
-    window.open(canvas.toDataUrl('image/png'), '_blank');
+    window.open(canvas!.toDataUrl('image/png'), '_blank');
   }
 
-  void _loadImg(String type) {
+  void _loadImg(String? type) {
     settings['tmp']['img_error'] = null;
 
     if (settings['particles']['shape']['image']['src'] != '') {
@@ -1009,7 +1063,7 @@ class Particles {
     }
   }
 
-  int _drawAnimFrame;
+  late int _drawAnimFrame;
 
   /**
    * A function that will run every frame.
@@ -1064,7 +1118,8 @@ class Particles {
     if (settings['particles']['shape']['type'] == 'image') {
       if (settings['tmp']['img_type'] == 'svg' &&
           settings['tmp']['source_svg'] == null) {
-        settings['tmp']['checkAnimFrame'] = window.requestAnimationFrame(settings['tmp']['checkAnimFrame']);
+        settings['tmp']['checkAnimFrame'] =
+            window.requestAnimationFrame(settings['tmp']['checkAnimFrame']);
       } else {
         window.cancelAnimationFrame(settings['tmp']['checkAnimFrame']);
         if (!settings['tmp']['img_error']) {
@@ -1080,7 +1135,8 @@ class Particles {
 
   void _init() {
     /* init canvas + particles */
-    settings['particles']['line_linked']['color_rgb_line'] = hexToRgb(settings['particles']['line_linked']['color']);
+    settings['particles']['line_linked']['color_rgb_line'] =
+        hexToRgb(settings['particles']['line_linked']['color']);
 
     settings['tmp']['obj'] = {
       'size_value': settings['particles']['size']['value'],
@@ -1088,10 +1144,13 @@ class Particles {
       'move_speed': settings['particles']['move']['speed'],
       'line_linked_distance': settings['particles']['line_linked']['distance'],
       'line_linked_width': settings['particles']['line_linked']['width'],
-      'mode_grab_distance': settings['interactivity']['modes']['grab']['distance'],
-      'mode_bubble_distance': settings['interactivity']['modes']['bubble']['distance'],
+      'mode_grab_distance': settings['interactivity']['modes']['grab']
+          ['distance'],
+      'mode_bubble_distance': settings['interactivity']['modes']['bubble']
+          ['distance'],
       'mode_bubble_size': settings['interactivity']['modes']['bubble']['size'],
-      'mode_repulse_distance': settings['interactivity']['modes']['repulse']['distance']
+      'mode_repulse_distance': settings['interactivity']['modes']['repulse']
+          ['distance']
     };
 
     _retinaInit();
@@ -1103,7 +1162,9 @@ class Particles {
 
   void _start() {
     if (settings['particles']['shape']['type'].contains('image')) {
-      settings['tmp']['img_type'] = settings['particles']['shape']['image']['src'].substring(settings['particles']['shape']['image']['src'].length - 3);
+      settings['tmp']['img_type'] = settings['particles']['shape']['image']
+              ['src']
+          .substring(settings['particles']['shape']['image']['src'].length - 3);
       _loadImg(settings['tmp']['img_type']);
     } else {
       _checkBeforeDraw();

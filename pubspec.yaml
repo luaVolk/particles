@@ -4,8 +4,8 @@ author: Volk <me@volk.pt>
 description: A highly configurble Dart library for creating interactive particles in the browser
 homepage: https://github.com/luaVolk/particles
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 dev_dependencies:
-  build_runner: '>=0.8.10 <2.0.0'
-  build_web_compilers: '>=0.3.6 <2.0.0'
-  sass_builder: ^2.1.2
+  build_runner: ^2.1.1
+  build_web_compilers: ^3.0.0
+  sass_builder: ^2.1.4
