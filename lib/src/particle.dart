@@ -7,38 +7,38 @@ class Particle {
   Particles _particles;
 
   Map<String, dynamic> color = {};
-  Map<String, num> position;
+  Map<String, num?>? position;
 
-  num opacity;
-  num opacity_bubble;
+  num? opacity;
+  num? opacity_bubble;
 
-  num radius;
-  num radius_bubble;
+  num? radius;
+  num? radius_bubble;
 
-  num x;
-  num y;
+  num? x;
+  num? y;
 
-  bool sizeStatus;
-  bool opacityStatus;
+  bool? sizeStatus;
+  bool? opacityStatus;
 
-  String shape;
+  String? shape;
 
-  Map img;
+  late Map img;
   dynamic character;
 
-  num vs;
-  num vx;
-  num vy;
-  num vxI;
-  num vyI;
-  num vo;
+  num? vs;
+  num? vx;
+  num? vy;
+  num? vxI;
+  num? vyI;
+  num? vo;
 
   Random _rng = new Random();
 
   Particle(
-    Map<String, dynamic> color, num this.opacity,
+    Map<String, dynamic> color, num? this.opacity,
     Particles this._particles,
-    [Map<String, num> this.position]
+    [Map<String, num?>? this.position]
   ) {
     /* size */
     this.radius = (_particles.settings['particles']['size']['random']
@@ -48,25 +48,25 @@ class Particle {
       this.sizeStatus = false;
       vs = _particles.settings['particles']['size']['anim']['speed'] / 100;
       if (!_particles.settings['particles']['size']['anim']['sync']) {
-        this.vs = this.vs * _rng.nextDouble();
+        this.vs = this.vs! * _rng.nextDouble();
       }
     }
 
     /* position */
     this.x = position != null
-        ? position['x']
-        : _rng.nextDouble() * _particles.canvasWidth;
+        ? position!['x']
+        : _rng.nextDouble() * _particles.canvasWidth!;
     this.y = position != null
-        ? position['y']
-        : _rng.nextDouble() * _particles.canvasHeight;
+        ? position!['y']
+        : _rng.nextDouble() * _particles.canvasHeight!;
 
     /* check position  - into the canvas */
-    if (this.x > _particles.canvasWidth - this.radius * 2)
-      this.x = this.x - this.radius;
-    else if (this.x < this.radius * 2) this.x = this.x + this.radius;
-    if (this.y > _particles.canvasHeight - this.radius * 2)
-      this.y = this.y - this.radius;
-    else if (this.y < this.radius * 2) this.y = this.y + this.radius;
+    if (this.x! > _particles.canvasWidth! - this.radius! * 2)
+      this.x = this.x! - this.radius!;
+    else if (this.x! < this.radius! * 2) this.x = this.x! + this.radius!;
+    if (this.y! > _particles.canvasHeight! - this.radius! * 2)
+      this.y = this.y! - this.radius!;
+    else if (this.y! < this.radius! * 2) this.y = this.y! + this.radius!;
 
     /* check position - avoid overlap */
     if (_particles.settings['particles']['move']['bounce']) {
@@ -117,7 +117,7 @@ class Particle {
       this.opacityStatus = false;
       this.vo = _particles.settings['particles']['opacity']['anim']['speed'] / 100;
       if (!_particles.settings['particles']['opacity']['anim']['sync']) {
-        this.vo = this.vo * _rng.nextDouble();
+        this.vo = this.vo! * _rng.nextDouble();
       }
     }
 
@@ -158,19 +158,19 @@ class Particle {
       this.vy = velbase['y'];
 
       if (_particles.settings['particles']['move']['parallax']) {
-        this.vx = velbase['x'] * this.radius;
-        this.vy = velbase['y'] * this.radius;
+        this.vx = velbase['x']! * this.radius!;
+        this.vy = velbase['y']! * this.radius!;
       } else if (_particles.settings['particles']['move']['random']) {
-        this.vx = this.vx * (_rng.nextDouble());
-        this.vy = this.vy * (_rng.nextDouble());
+        this.vx = this.vx! * (_rng.nextDouble());
+        this.vy = this.vy! * (_rng.nextDouble());
       }
     } else {
       if (_particles.settings['particles']['move']['parallax']) {
-        this.vx = (velbase['x'] + _rng.nextInt(2) - 0.5) * this.radius;
-        this.vy = (velbase['y'] + _rng.nextInt(2) - 0.5) * this.radius;
+        this.vx = (velbase['x']! + _rng.nextInt(2) - 0.5) * this.radius!;
+        this.vy = (velbase['y']! + _rng.nextInt(2) - 0.5) * this.radius!;
       } else {
-        this.vx = velbase['x'] + _rng.nextDouble() - 0.5;
-        this.vy = velbase['y'] + _rng.nextDouble() - 0.5;
+        this.vx = velbase['x']! + _rng.nextDouble() - 0.5;
+        this.vy = velbase['y']! + _rng.nextDouble() - 0.5;
       }
     }
 
@@ -219,21 +219,21 @@ class Particle {
     }
   }
 
-  void _checkOverlap([Map<String, num> position]) {
+  void _checkOverlap([Map<String, num?>? position]) {
     for (int i = 0; i < _particles.settings['particles']['array'].length; i++) {
       Particle p2 = _particles.settings['particles']['array'][i];
 
-      num dx = this.x - p2.x, dy = this.y - p2.y;
+      num dx = this.x! - p2.x!, dy = this.y! - p2.y!;
 
       double dist = sqrt(dx * dx + dy * dy);
 
-      if (dist <= this.radius + p2.radius) {
+      if (dist <= this.radius! + p2.radius!) {
         this.x = position != null
             ? position['x']
-            : _rng.nextDouble() * _particles.canvasWidth;
+            : _rng.nextDouble() * _particles.canvasWidth!;
         this.y = position != null
             ? position['y']
-            : _rng.nextDouble() * _particles.canvasHeight;
+            : _rng.nextDouble() * _particles.canvasHeight!;
         _checkOverlap();
       }
     }
@@ -257,27 +257,27 @@ class Particle {
     c.restore();
   }
 
-  drawShape(String shape, num radius, [bool stroke=false]) {
+  drawShape(String? shape, num? radius, [bool stroke=false]) {
     switch (shape) {
       case 'circle':
-        _particles.ctx.arc(this.x, this.y, radius, 0, pi * 2, false);
+        _particles.ctx.arc(this.x!, this.y!, radius!, 0, pi * 2, false);
         break;
 
       case 'edge':
       case 'square':
-        _particles.ctx.rect(this.x - radius, this.y - radius, radius * 2, radius * 2);
+        _particles.ctx.rect(this.x! - radius!, this.y! - radius, radius * 2, radius * 2);
         break;
 
       case 'triangle':
-        _drawPolygon(_particles.ctx, this.x - radius, this.y + radius / 1.66, radius * 2, 3, 2);
+        _drawPolygon(_particles.ctx, this.x! - radius!, this.y! + radius / 1.66, radius * 2, 3, 2);
         break;
 
       case 'polygon':
         _drawPolygon(
           _particles.ctx,
-          this.x - radius /
+          this.x! - radius! /
                   (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 3.5), // startX
-          this.y - radius / (2.66 / 3.5), // startY
+          this.y! - radius / (2.66 / 3.5), // startY
           radius * 2.66 /
               (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 3), // sideLength
           _particles.settings['particles']['shape']['polygon']['nb_sides'], // sideCountNumerator
@@ -288,9 +288,9 @@ class Particle {
       case 'star':
         _drawPolygon(
           _particles.ctx,
-          this.x - radius * 2 /
+          this.x! - radius! * 2 /
                   (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 4), // startX
-          this.y - radius / (2 * 2.66 / 3.5), // startY
+          this.y! - radius / (2 * 2.66 / 3.5), // startY
           radius * 2 * 2.66 /
               (_particles.settings['particles']['shape']['polygon']['nb_sides'] / 3), // sideLength
           _particles.settings['particles']['shape']['polygon']['nb_sides'], // sideCountNumerator
@@ -299,8 +299,8 @@ class Particle {
         break;
 
       case 'heart':
-        var x = this.x - radius / 2;
-        var y = this.y - radius / 2;
+        num x = this.x! - radius! / 2;
+        num y = this.y! - radius / 2;
         _particles.ctx.moveTo(x, y + radius / 4);
         _particles.ctx.quadraticCurveTo(x, y, x + radius / 4, y);
         _particles.ctx.quadraticCurveTo(x + radius / 2, y, x + radius / 2, y + radius / 4);
@@ -314,18 +314,18 @@ class Particle {
 
       case 'char':
       case 'character':
-        _particles.ctx.font = '${_particles.settings['particles']['shape']['character']['style']} ${_particles.settings['particles']['shape']['character']['weight']} ${radius.round() * 2}px ${_particles.settings['particles']['shape']['character']['font']}';
+        _particles.ctx.font = '${_particles.settings['particles']['shape']['character']['style']} ${_particles.settings['particles']['shape']['character']['weight']} ${radius!.round() * 2}px ${_particles.settings['particles']['shape']['character']['font']}';
         if (stroke) {
-        _particles.ctx.strokeText(this.character, this.x - radius/2, this.y + radius/2);
+        _particles.ctx.strokeText(this.character, this.x! - radius/2, this.y! + radius/2);
         } else {
-        _particles.ctx.fillText(this.character, this.x - radius/2, this.y + radius/2);
+        _particles.ctx.fillText(this.character, this.x! - radius/2, this.y! + radius/2);
         }
         break;
 
       case 'image':
         draw(img_obj) {
-          _particles.ctx.drawImageScaled(img_obj, this.x - radius,
-              this.y - radius, radius * 2, radius * 2 / this.img['ratio']);
+          _particles.ctx.drawImageScaled(img_obj, this.x! - radius!,
+              this.y! - radius, radius * 2, radius * 2 / this.img['ratio']);
         }
 
         var img_obj;
@@ -374,7 +374,7 @@ class Particle {
   }
 
   void draw() {
-    num radius, opacity;
+    num? radius, opacity;
 
     String colorValue;
 
